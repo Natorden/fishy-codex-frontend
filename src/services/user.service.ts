@@ -1,8 +1,6 @@
 import type { User } from "@/models/User";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import * as http from "http";
 import type { LoginDto } from "@/models/Login.dto";
+import http from "./http.client";
 
 export class UserService {
   async createUser(
@@ -11,7 +9,7 @@ export class UserService {
     email: string,
     password: string
   ): Promise<User> {
-    const result = await http.post<User>("/users", {
+    const result = await http.post<User>("/users/", {
       name: name,
       age: age,
       email: email,
@@ -20,13 +18,34 @@ export class UserService {
     return result.data;
   }
 
+  async updateUser(
+    id: string,
+    name: string,
+    age: number,
+    email: string,
+    password: string
+  ): Promise<User> {
+    const result = await http.patch<User>("/users/" + id, {
+      name: name,
+      age: age,
+      email: email,
+      password: password,
+    });
+    return result.data;
+  }
+
+  async removeUser(id: string) {
+    const result = await http.delete<User>("/users/" + id);
+    return result.data;
+  }
+
   async logIn(login: LoginDto): Promise<User> {
-    const result = await http.post<User>("/login", login);
+    const result = await http.post<User>("/login/", login);
     return result.data;
   }
 
   async getAllUsers(): Promise<User[]> {
-    const result = await http.get<User[]>("/users");
+    const result = await http.get<User[]>("/users/");
     return result.data;
   }
 

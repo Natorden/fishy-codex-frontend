@@ -26,6 +26,20 @@ export const FishStore = defineStore({
         .createFish(catchName, species, length, weight)
         .catch((err) => console.log(err.message));
     },
+    updateFish(
+      id: string,
+      catchName: string,
+      species: string,
+      length: number,
+      weight: number
+    ) {
+      fishService
+        .updateFish(id, catchName, species, length, weight)
+        .catch((err) => console.log(err.message));
+    },
+    removeFish(id: string) {
+      fishService.removeFish(id).catch((err) => console.log(err.message));
+    },
     getAllFish() {
       fishService
         .getAllFish()

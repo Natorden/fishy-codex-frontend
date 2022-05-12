@@ -33,6 +33,20 @@ export const UserStore = defineStore({
         .createUser(name, age, email, password)
         .catch((err) => console.log(err.message));
     },
+    updateUser(
+      id: string,
+      name: string,
+      age: number,
+      email: string,
+      password: string
+    ) {
+      userService
+        .updateUser(id, name, age, email, password)
+        .catch((err) => console.log(err.message));
+    },
+    removeUser(id: string) {
+      userService.removeUser(id).catch((err) => console.log(err.message));
+    },
     logInUser(email: string, password: string): boolean {
       const login: LoginDto = {
         email: email,

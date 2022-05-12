@@ -8,9 +8,11 @@ defineProps<{
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
     <h3>
-      You’ve successfully created a project with
-      <a target="_blank" href="https://vitejs.dev/">Vite</a> +
-      <a target="_blank" href="https://vuejs.org/">Vue 3</a>. What's next?
+      Welcome to the Fishy Codex, if you already have an account,
+      <router-link to="/login">login</router-link>. If you're new
+      here, <router-link to="/register">register</router-link> an account
+<!--      <a target="_blank" href="http://localhost:3000/login">login</a>-->
+<!--      <a target="_blank" href="http://localhost:3000/register">register</a>-->
     </h3>
   </div>
 </template>

@@ -6,20 +6,16 @@ import HelloWorld from "@/components/HelloWorld.vue";
 <template>
   <header>
     <img
-      alt="Vue logo"
+      alt="Fishy Codex Logo"
       class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
+      src="@/assets/FishyCodex.png"
+      width="192"
+      height="192"
     />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <HelloWorld msg="Welcome to the Fishy Codex" />
 
-      <nav>
-        <RouterLink to="/login">Login</RouterLink> |
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
     </div>
   </header>
 

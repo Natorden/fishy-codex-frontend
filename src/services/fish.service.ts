@@ -1,7 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import http from "http";
 import type { Fish } from "@/models/Fish";
+import http from "./http.client";
 
 export class FishService {
   async createFish(
@@ -10,7 +8,7 @@ export class FishService {
     length: number,
     weight: number
   ): Promise<Fish> {
-    const result = await http.post<Fish>("/fish", {
+    const result = await http.post<Fish>("/fishy/", {
       catchName: catchName,
       species: species,
       length: length,
@@ -19,13 +17,34 @@ export class FishService {
     return result.data;
   }
 
+  async updateFish(
+    id: string,
+    catchName: string,
+    species: string,
+    length: number,
+    weight: number
+  ): Promise<Fish> {
+    const result = await http.patch<Fish>("/fishy/" + id, {
+      catchName: catchName,
+      species: species,
+      length: length,
+      weight: weight,
+    });
+    return result.data;
+  }
+
+  async removeFish(id: string) {
+    const result = await http.delete<Fish>("/fishy/" + id);
+    return result.data;
+  }
+
   async getAllFish(): Promise<Fish[]> {
-    const result = await http.get<Fish[]>("/fish");
+    const result = await http.get<Fish[]>("/fishy/");
     return result.data;
   }
 
   async getFishById(id: string): Promise<Fish> {
-    const result = await http.get<Fish>("/fish/" + id);
+    const result = await http.get<Fish>("/fishy/" + id);
     return result.data;
   }
 }
