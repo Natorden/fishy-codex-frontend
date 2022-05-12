@@ -20,9 +20,9 @@
           placeholder="Enter your password"
         >
         </b-form-input>
-        <span
-          >If you have no account, you can register
-          <router-link to="/register">here</router-link></span
+        <span>
+          Join our community and
+          <router-link to="/register">create an account</router-link></span
         >
       </div>
       <b-button
@@ -48,7 +48,7 @@ const passwordInput = ref("");
 function logIn() {
   if (emailInput.value.length > 0 && passwordInput.value.length > 0) {
     if (userStore.logInUser(emailInput.value, passwordInput.value)) {
-      router.push({ path: "/register" });
+      router.push({ path: "/home" });
     }
   }
   return;

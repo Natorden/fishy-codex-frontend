@@ -68,7 +68,7 @@ export const UserStore = defineStore({
     logout() {
       this.loggedInUser = { email: "" } as User;
       localStorage.removeItem("user");
-      router.replace({ path: "/loginView" });
+      router.replace({ path: "/login" });
     },
   },
 });
