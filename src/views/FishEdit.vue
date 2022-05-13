@@ -1,7 +1,7 @@
 <template>
   <div class="container justify-content-center" style="width: 35em">
     <b-card bg-variant="light">
-      <h2 style="text-align: center; margin-bottom: 1.5em">Add a fish</h2>
+      <h2 style="text-align: center; margin-bottom: 1.5em">Update fish</h2>
       <div
         class="container justify-content-center"
         style="width: 25em; margin-bottom: 4em"
@@ -39,8 +39,8 @@
         class="container justify-content-center"
         block
         variant="success"
-        @click="registerFish"
-        >Register Fish
+        @click="updateFish"
+        >Update Fish
       </b-button>
     </b-card>
   </div>
@@ -57,14 +57,15 @@ const speciesInput = ref("");
 const lengthInput = ref("");
 const weightInput = ref("");
 
-function registerFish() {
+function updateFish() {
   if (
     catchNameInput.value.length > 0 &&
     speciesInput.value.length > 0 &&
     lengthInput.value.length > 0 &&
     weightInput.value.length > 0
   ) {
-    fishStore.createFish(
+    fishStore.updateFish(
+      fishStore.$id,
       catchNameInput.value,
       speciesInput.value,
       parseInt(lengthInput.value),

@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import LoginView from "../views/LoginView.vue";
 import FishCreate from "../views/FishCreate.vue";
+import FishEdit from "../views/FishEdit.vue";
 import ProfileView from "../views/ProfileView.vue";
 
 const router = createRouter({
@@ -27,6 +28,11 @@ const router = createRouter({
       path: "/addFish",
       name: "Add Fish",
       component: FishCreate,
+    },
+    {
+      path: "/editFish",
+      name: "Edit Fish",
+      component: FishEdit,
     },
     {
       path: "/profile",
