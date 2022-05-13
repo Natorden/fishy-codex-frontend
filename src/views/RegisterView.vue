@@ -70,8 +70,8 @@ function registerUser() {
       emailInput.value,
       passwordInput.value
     );
+    router.push({ path: "/home" });
   }
-  router.push({ path: "/login" });
 }
 </script>
 
