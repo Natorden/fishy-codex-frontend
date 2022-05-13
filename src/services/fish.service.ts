@@ -6,14 +6,17 @@ export class FishService {
     catchName: string,
     species: string,
     length: number,
-    weight: number
+    weight: number,
+    userUuid: string
   ): Promise<Fish> {
     const result = await http.post<Fish>("/fishy/", {
       catchName: catchName,
       species: species,
       length: length,
       weight: weight,
+      userUuid: userUuid,
     });
+    console.log(result.data);
     return result.data;
   }
 

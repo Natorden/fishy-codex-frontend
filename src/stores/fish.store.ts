@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import type { Fish } from "@/models/Fish";
 import { FishService } from "@/services/fish.service";
+import type { User } from "@/models/User";
 
 const fishService: FishService = new FishService();
 
@@ -20,10 +21,11 @@ export const FishStore = defineStore({
       catchName: string,
       species: string,
       length: number,
-      weight: number
+      weight: number,
+      userUuid: string
     ) {
       fishService
-        .createFish(catchName, species, length, weight)
+        .createFish(catchName, species, length, weight, userUuid)
         .catch((err) => console.log(err.message));
     },
     updateFish(

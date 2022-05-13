@@ -48,7 +48,7 @@ const passwordInput = ref("");
 function logIn() {
   if (emailInput.value.length > 0 && passwordInput.value.length > 0) {
     if (userStore.logInUser(emailInput.value, passwordInput.value)) {
-      router.push({ path: "/home" });
+      router.push({ path: "/profile" });
     }
   }
   return;

@@ -56,6 +56,7 @@ const catchNameInput = ref("");
 const speciesInput = ref("");
 const lengthInput = ref("");
 const weightInput = ref("");
+const userUuid = ref("cd466312-6899-423b-b79f-a789e4a3f535");
 
 function registerFish() {
   if (
@@ -68,7 +69,8 @@ function registerFish() {
       catchNameInput.value,
       speciesInput.value,
       parseInt(lengthInput.value),
-      parseInt(weightInput.value)
+      parseInt(weightInput.value),
+      userUuid.value
     );
   }
   router.push({ path: "/home" });
