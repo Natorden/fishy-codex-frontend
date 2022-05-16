@@ -14,6 +14,10 @@ export const UserStore = defineStore({
   }),
   getters: {
     userName: (state) => {
+      if (state.loggedInUser.name != undefined) return state.loggedInUser.name;
+      else return "";
+    },
+    email: (state) => {
       if (state.loggedInUser.email != undefined)
         return state.loggedInUser.email;
       else return "";
@@ -52,6 +56,7 @@ export const UserStore = defineStore({
         email: email,
         password: password,
       };
+      router.replace({ path: "/profile" });
       userService
         .logIn(login)
         .then((user) => {

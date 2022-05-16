@@ -10,7 +10,7 @@
     <span
       class="navbar-brand"
       href="#"
-      style="margin-left: 1em; font-size: 1.5em; color: #ebb965"
+      style="margin-left: 1em; font-size: 1.5em; color: #a3f8e4"
       >Fishy Codex</span
     >
     <!--    Reactive drop down menu, not working atm-->
@@ -28,46 +28,38 @@
     <div class="collapse navbar-collapse" style="margin-left: 1em">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <RouterLink to="/home" id="leftNavbarItem1">Home</RouterLink> |
+          <RouterLink to="/home" id="navbarItem">Home</RouterLink> |
         </li>
       </ul>
     </div>
       <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav">
-          <!--        is shown when logged in-->
+          <!--        buttons shown when user logged in-->
+          <span v-show="isLoggedIn.call()" id="username">{{ userStore.userName }}</span>
           <li class="nav-item active" v-show="isLoggedIn.call()">
-            <RouterLink to="" @click="logout" id="rightNavbarItem1">Log Out</RouterLink> |
+            <RouterLink to="" @click="openHome" id="navbarItem">My Fish</RouterLink> |
           </li>
           <li class="nav-item active" v-show="isLoggedIn.call()">
-            <RouterLink to="" @click="editProfile" id="rightNavbarItem2">My Profile</RouterLink> |
+            <RouterLink to="" @click="openCommunity" id="navbarItem">Community</RouterLink> |
+          </li>
+          <li class="nav-item active" v-show="isLoggedIn.call()">
+            <RouterLink to="" @click="editProfile" id="navbarItem">My Profile</RouterLink> |
+          </li>
+          <li class="nav-item active" v-show="isLoggedIn.call()">
+            <RouterLink to="" @click="logout" id="navbarItem">Log Out</RouterLink> |
+          </li>
+          <li class="nav-item active" v-show="!isLoggedIn.call()">
+            <RouterLink
+                to="/login"
+                v-show="!isLoggedIn.call()"
+                id="navbarItem"
+            >Log In
+            </RouterLink
+            >
           </li>
         </ul>
     </div>
-
-
-
   </nav>
-
-  <header>
-    <img
-      alt="Fishy Codex Logo"
-      class="logo"
-      src="@/assets/FishyCodex.png"
-      width="192"
-      height="192"
-    />
-
-
-    <h1>Welcome to the Fishy Codex</h1>
-    <h3>
-      Welcome to the Fishy Codex, if you already have an account,
-      <router-link to="/login">login</router-link>. If you're new here,
-      <router-link to="/register">register</router-link> an account
-      <!--      <a target="_blank" href="http://localhost:3000/login">login</a>-->
-      <!--      <a target="_blank" href="http://localhost:3000/register">register</a>-->
-    </h3>
-
-  </header>
 
   <RouterView />
 </template>
@@ -97,6 +89,27 @@ function editProfile(){
   router.push({ path: "/profile" });
 }
 
+function openCommunity(){
+  router.push({ path: "/community" });
+}
+function openHome(){
+  router.push({ path: "/fish" });
+}
+
 </script>
 
-<style></style>
+<style>
+#navbarItem {
+  margin-right: 1em;
+  text-decoration: none;
+  color: ghostwhite;
+  font-size: 1.2em;
+}
+
+#username {
+  margin-right: 1.5em;
+  text-decoration: none;
+  color: #a3f8e4;
+  font-size: 1.2em;
+}
+</style>

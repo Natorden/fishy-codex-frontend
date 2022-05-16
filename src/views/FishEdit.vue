@@ -65,7 +65,7 @@ function updateFish() {
     weightInput.value.length > 0
   ) {
     fishStore.updateFish(
-      fishStore.$id,
+      route.params.fishesId,
       catchNameInput.value,
       speciesInput.value,
       parseInt(lengthInput.value),

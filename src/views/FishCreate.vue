@@ -56,7 +56,7 @@ const catchNameInput = ref("");
 const speciesInput = ref("");
 const lengthInput = ref("");
 const weightInput = ref("");
-const userUuid = ref("cd466312-6899-423b-b79f-a789e4a3f535");
+const userUuid = route.params.usersId;
 
 function registerFish() {
   if (
