@@ -3,12 +3,6 @@
     <h3>
       Welcome to your fish page, this displays your fish that you've logged
     </h3>
-    <!--    <h3>-->
-    <!--      Add a fish-->
-    <!--      <router-link to="'/addFish/' + userStore.loggedInUser.uuid"-->
-    <!--        >here</router-link-->
-    <!--      >-->
-    <!--    </h3>-->
     <b-button
       variant="success"
       @click="getUserUuid(userStore.loggedInUser.uuid)"
@@ -71,14 +65,15 @@ const fishStore = FishStore();
 const userStore = UserStore();
 let fishList = [] as Fish[];
 const shownFishList = ref([] as Fish[]);
-// const usersId = userStore.loggedInUser.uuid;
 
 const { fishy } = storeToRefs(fishStore);
 
 watch(fishy, (fish) => {
   fishList = [] as Fish[];
   fish.forEach((fishes) => {
-    fishList.push(fishes);
+    if (fishes.user.uuid == userStore.loggedIn.uuid) {
+      fishList.push(fishes);
+    }
   });
   shownFishList.value = fishList;
   console.table(fishList);
