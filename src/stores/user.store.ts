@@ -3,13 +3,14 @@ import { UserService } from "@/services/user.service";
 import type { User } from "@/models/User";
 import type { LoginDto } from "@/models/Login.dto";
 import router from "@/router";
+import { useStorage } from "@vueuse/core";
 
 const userService: UserService = new UserService();
 
 export const UserStore = defineStore({
   id: "userStore",
   state: () => ({
-    loggedInUser: { email: "" } as User,
+    loggedInUser: useStorage("loggedInUser", { email: "" } as User),
     users: [] as User[],
   }),
   getters: {
@@ -19,7 +20,7 @@ export const UserStore = defineStore({
     },
     userAge: (state) => {
       if (state.loggedInUser.age != undefined) return state.loggedInUser.age;
-      else return "";
+      else return -1;
     },
     userEmail: (state) => {
       if (state.loggedInUser.email != undefined)

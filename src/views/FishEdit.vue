@@ -22,6 +22,8 @@
         </b-form-input>
         <b-form-input
           size="md"
+          id="number"
+          type="number"
           v-model="lengthInput"
           placeholder="Enter the fish length"
           style="margin-bottom: 0.5em"
@@ -29,6 +31,8 @@
         </b-form-input>
         <b-form-input
           size="md"
+          id="number"
+          type="number"
           v-model="weightInput"
           placeholder="Enter the fish weight"
           style="margin-bottom: 0.5em"
@@ -50,29 +54,40 @@
 import { FishStore } from "@/stores/fish.store";
 import { ref } from "vue";
 import router from "@/router";
-
+import { useRoute } from "vue-router";
 const fishStore = FishStore();
-const catchNameInput = ref("");
-const speciesInput = ref("");
-const lengthInput = ref("");
-const weightInput = ref("");
+const catchNameInput = ref<string>("");
+const speciesInput = ref<string>("");
+const lengthInput = ref<number>();
+const weightInput = ref<number>();
+
+if (fishStore.getFish != null) {
+  catchNameInput.value = fishStore.getFish.catchName;
+  speciesInput.value = fishStore.getFish.species;
+  lengthInput.value = fishStore.getFish.length;
+  weightInput.value = fishStore.getFish.weight;
+}
+
+const route = useRoute();
 
 function updateFish() {
   if (
     catchNameInput.value.length > 0 &&
     speciesInput.value.length > 0 &&
-    lengthInput.value.length > 0 &&
-    weightInput.value.length > 0
+    lengthInput.value != null &&
+    lengthInput.value > 0 &&
+    weightInput.value != null &&
+    weightInput.value > 0
   ) {
     fishStore.updateFish(
-      route.params.fishesId,
+      route.params.fishesId as string,
       catchNameInput.value,
       speciesInput.value,
-      parseInt(lengthInput.value),
-      parseInt(weightInput.value)
+      lengthInput.value,
+      weightInput.value
     );
+    router.replace({ path: "/fish" });
   }
-  router.push({ path: "/home" });
 }
 </script>
 

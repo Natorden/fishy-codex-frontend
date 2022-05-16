@@ -3,13 +3,15 @@
     <h3>
       Welcome to your fish page, this displays your fish that you've logged
     </h3>
-    <h3>
-      Add a fish
-      <router-link to="'/addFish/' + userStore.loggedInUser.uuid"
-        >here</router-link
-      >
-    </h3>
-    <b-button variant="success" @click="userStore.loggedInUser.uuid()"
+    <!--    <h3>-->
+    <!--      Add a fish-->
+    <!--      <router-link to="'/addFish/' + userStore.loggedInUser.uuid"-->
+    <!--        >here</router-link-->
+    <!--      >-->
+    <!--    </h3>-->
+    <b-button
+      variant="success"
+      @click="getUserUuid(userStore.loggedInUser.uuid)"
       >Add</b-button
     >
   </div>
@@ -40,10 +42,10 @@
               </b-row>
             </b-col>
             <b-col>
-              <b-button variant="success" @click="editFish(fish.uuid)"
+              <b-button variant="success" @click="editFish(fish)"
                 >Edit</b-button
               >
-              <b-button variant="success" @click="removeFish(fish.uuid)"
+              <b-button variant="success" @click="removeFish(fish)"
                 >Delete</b-button
               >
             </b-col>
@@ -51,10 +53,7 @@
         </b-container>
       </b-list-group-item>
     </b-list-group>
-    <h4
-      v-show="fishList.length === 0 || shownFishList.length === 0"
-      style="text-align: center"
-    >
+    <h4 v-show="shownFishList.length === 0" style="text-align: center">
       You haven't recorded any catch yet
     </h4>
   </div>
@@ -63,38 +62,47 @@
 <script setup lang="ts">
 import { FishStore } from "@/stores/fish.store";
 import { UserStore } from "@/stores/user.store";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import type { Fish } from "@/models/Fish";
 import router from "@/router";
+import { storeToRefs } from "pinia";
 
 const fishStore = FishStore();
 const userStore = UserStore();
 let fishList = [] as Fish[];
 const shownFishList = ref([] as Fish[]);
-const usersId = userStore.loggedInUser.uuid;
+// const usersId = userStore.loggedInUser.uuid;
 
-fishStore.fishy.forEach((fish) => {
-  fishList.push(fish);
+const { fishy } = storeToRefs(fishStore);
+
+watch(fishy, (fish) => {
+  fishList = [] as Fish[];
+  fish.forEach((fishes) => {
+    fishList.push(fishes);
+  });
+  shownFishList.value = fishList;
+  console.table(fishList);
 });
 
 function isLoggedIn(): boolean {
   return !!localStorage.getItem("user");
 }
-// function getUserUuid() {
-//   const usersId = user.uuid;
-//   router.push({ path: "/addFish/" + usersId });
-// }
+function getUserUuid(usersId: string) {
+  router.replace({ path: "/addFish/" + usersId });
+}
 
-function removeFish(fishesId: string) {
+function removeFish(fish: Fish) {
   if (isLoggedIn()) {
-    fishStore.removeFish(fishesId);
+    fishStore.removeFish(fish.uuid).then(() => {
+      fishStore.getAllFish();
+    });
   }
 }
 
-function editFish(fishesId: string) {
-  if (isLoggedIn()) router.push({ path: "/editFish/" + fishesId });
+function editFish(fish: Fish) {
+  fishStore.getSingleFish(fish);
+  if (isLoggedIn()) router.push({ path: "/editFish/" + fish.uuid });
 }
-shownFishList.value = fishList;
 fishStore.getAllFish();
 </script>
 

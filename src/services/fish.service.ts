@@ -9,6 +9,7 @@ export class FishService {
     weight: number,
     userUuid: string
   ): Promise<Fish> {
+    console.log(catchName, species, length, weight, userUuid);
     const result = await http.post<Fish>("/fishy/", {
       catchName: catchName,
       species: species,
@@ -36,7 +37,7 @@ export class FishService {
     return result.data;
   }
 
-  async removeFish(id: string) {
+  async removeFish(id: string): Promise<Fish> {
     const result = await http.delete<Fish>("/fishy/" + id);
     return result.data;
   }

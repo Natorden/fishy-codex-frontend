@@ -46,32 +46,37 @@ import type {User} from "@/models/User";
 
 const userStore = UserStore();
 let sender = ref({} as User);
-const nameInput = userStore.userName;
-const ageInput = userStore.userAge;
-const emailInput = userStore.userEmail;
-const passwordInput = userStore.userPassword;
+const nameInput = ref<string>("");
+const ageInput = ref<number>();
+const emailInput = ref<string>("");
+const passwordInput =ref<string>("");
+nameInput.value = userStore.userName;
+ageInput.value = userStore.userAge;
+emailInput.value = userStore.userEmail;
+passwordInput.value = userStore.userPassword
 
-function isLoggedIn(): boolean {
-  sender.value = JSON.parse(<string>localStorage.getItem("user")) as User;
-  return !!localStorage.getItem("user");
-}
+
+  function isLoggedIn(): boolean {
+    sender.value = JSON.parse(<string>localStorage.getItem("user")) as User;
+    return !!localStorage.getItem("user");
+  }
 
 function updateUser() {
   if (
     nameInput.value.length > 0 &&
-    ageInput.value.length > 0 &&
+      ageInput.value != null &&  ageInput.value > 0  &&
     emailInput.value.length > 0 &&
     passwordInput.value.length > 0
   ) {
-    userStore.updateUser(
-        UserStore.$id,
-        nameInput.value,
-        parseInt(ageInput.value),
-        emailInput.value,
-        passwordInput.value
-    );
+      userStore.updateUser(
+          userStore.loggedIn.uuid,
+          nameInput.value,
+          ageInput.value,
+          emailInput.value,
+          passwordInput.value
+      );
   }
-  router.push({ path: "/login" });
+  router.push({ path: "/fish" });
 }
 </script>
 

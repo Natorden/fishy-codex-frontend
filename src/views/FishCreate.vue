@@ -22,6 +22,8 @@
         </b-form-input>
         <b-form-input
           size="md"
+          id="number"
+          type="number"
           v-model="lengthInput"
           placeholder="Enter the fish length"
           style="margin-bottom: 0.5em"
@@ -29,6 +31,8 @@
         </b-form-input>
         <b-form-input
           size="md"
+          id="number"
+          type="number"
           v-model="weightInput"
           placeholder="Enter the fish weight"
           style="margin-bottom: 0.5em"
@@ -50,13 +54,14 @@
 import { FishStore } from "@/stores/fish.store";
 import { ref } from "vue";
 import router from "@/router";
+import { UserStore } from "@/stores/user.store";
+const userStore = UserStore();
 
 const fishStore = FishStore();
 const catchNameInput = ref("");
 const speciesInput = ref("");
 const lengthInput = ref("");
 const weightInput = ref("");
-const userUuid = route.params.usersId;
 
 function registerFish() {
   if (
@@ -70,7 +75,7 @@ function registerFish() {
       speciesInput.value,
       parseInt(lengthInput.value),
       parseInt(weightInput.value),
-      userUuid.value
+      userStore.loggedIn.uuid
     );
   }
   router.push({ path: "/home" });
