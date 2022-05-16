@@ -16,6 +16,8 @@
         <b-form-input
           size="md"
           v-model="ageInput"
+          id="number"
+          type="number"
           placeholder="Enter your age"
           style="margin-bottom: 0.5em"
         >

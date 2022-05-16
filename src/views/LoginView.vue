@@ -7,6 +7,8 @@
         style="width: 25em; margin-bottom: 4em"
       >
         <b-form-input
+          id="email"
+          type="email"
           size="md"
           v-model="emailInput"
           placeholder="Enter your username"

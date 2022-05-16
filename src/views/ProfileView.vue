@@ -9,29 +9,21 @@
         <b-form-input
           size="md"
           v-model="nameInput"
-          placeholder="Enter your username"
           style="margin-bottom: 0.5em"
         >
         </b-form-input>
         <b-form-input
-          size="md"
-          v-model="ageInput"
-          placeholder="Enter your age"
-          style="margin-bottom: 0.5em"
+            size="md" v-model="ageInput" id='number' type= 'number'  style="margin-bottom: 0.5em"
+        >
+        </b-form-input>
+        <b-form-input
+            size="md" id='email' type= 'email' v-model="emailInput" style="margin-bottom: 0.5em"
         >
         </b-form-input>
         <b-form-input
           size="md"
-          v-model="emailInput"
-          placeholder="Enter your email"
-          style="margin-bottom: 0.5em"
-        >
-        </b-form-input>
-        <b-form-input
-          size="md"
-          type="password"
+          id="password"
           v-model="passwordInput"
-          placeholder="Enter your password"
         >
         </b-form-input>
       </div>
@@ -54,10 +46,10 @@ import type {User} from "@/models/User";
 
 const userStore = UserStore();
 let sender = ref({} as User);
-const nameInput = ref("");
-const ageInput = ref("");
-const emailInput = ref("");
-const passwordInput = ref("");
+const nameInput = userStore.userName;
+const ageInput = userStore.userAge;
+const emailInput = userStore.userEmail;
+const passwordInput = userStore.userPassword;
 
 function isLoggedIn(): boolean {
   sender.value = JSON.parse(<string>localStorage.getItem("user")) as User;

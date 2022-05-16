@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import type { Fish } from "@/models/Fish";
 import { FishService } from "@/services/fish.service";
-import type { User } from "@/models/User";
 
 const fishService: FishService = new FishService();
 

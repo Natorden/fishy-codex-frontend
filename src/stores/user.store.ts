@@ -17,9 +17,18 @@ export const UserStore = defineStore({
       if (state.loggedInUser.name != undefined) return state.loggedInUser.name;
       else return "";
     },
-    email: (state) => {
+    userAge: (state) => {
+      if (state.loggedInUser.age != undefined) return state.loggedInUser.age;
+      else return "";
+    },
+    userEmail: (state) => {
       if (state.loggedInUser.email != undefined)
         return state.loggedInUser.email;
+      else return "";
+    },
+    userPassword: (state) => {
+      if (state.loggedInUser.password != undefined)
+        return state.loggedInUser.password;
       else return "";
     },
     loggedIn: (state) => {
