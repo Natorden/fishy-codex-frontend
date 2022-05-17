@@ -15,6 +15,7 @@
     "bootstrap-vue-3": "^0.1.13",
     "flowbite": "^1.4.5",
     "pinia": "^2.0.13",
+    "socket.io-client": "^4.5.0",
     "vue": "^3.2.33",
     "vue-router": "^4.0.14"
   },
