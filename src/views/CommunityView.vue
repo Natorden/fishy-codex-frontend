@@ -2,10 +2,50 @@
 
   <div
     class="container"
-    style="margin: 2em auto; width: 60em; padding: 0.5em; height: 60vh"
+    style="margin: 2em auto; width: 150em; padding: 0.5em; height: 60vh"
   >
     <div class="row h-100">
-      <div class="col-4">
+      <div class="col-4" width="25%">
+        <div class="input-group mb-3">
+          <input
+              style="font-size: 1.5em"
+              id="search"
+              class="form-control"
+              placeholder="Search for a user"
+              aria-label="Write the name of user you want to find"
+              aria-describedby="basic-addon2"
+              v-model="userFilter"
+              @keyup="shownUserList = filterUserList(userFilter)"
+          />
+        </div>
+        <b-list-group v-for="(user, index) in shownUserList" v-bind:key="index">
+          <b-list-group-item class="justify-content-center">
+            <b-container>
+              <b-row>
+                <b-col cols="10"
+                ><span style="font-size: 1.5em">{{ user.name }}</span></b-col
+                >
+                <b-col cols="2">
+                  <b-button
+                      variant="success"
+                      @click="addFriend(user.uuid)"
+                      v-if="user.uuid !== sender.uuid"
+                  >Add</b-button
+                  >
+                </b-col>
+              </b-row>
+            </b-container>
+          </b-list-group-item>
+        </b-list-group>
+
+        <h4
+            v-show="shownUserList.length === 0"
+            style="text-align: center"
+        >
+          There are no users to show
+        </h4>
+      </div>
+      <div class="col-4"  width="25%">
         <div class="card h-100">
           <div class="card-body">
             <h5 class="card-title">Chat Rooms</h5>
@@ -38,16 +78,16 @@
         </div>
       </div>
       <div class="col">
-        <div class="card h-100">
+        <div class="card h-120">
           <div class="card-body">
             <div class="messages">
               <ul v-if="chatStore.selectChatRoom() != undefined">
                 <li v-for="chat in chatStore.selectChatRoom().chats">
-                  {{ chat.user.username }}: {{ chat.text }}
+                  {{ chat.user.name }}: {{ chat.text }}
                 </li>
               </ul>
               <p v-for="typing in chatStore.userTyping">
-                {{ typing.username }} is typing...
+                {{ typing.name }} is typing...
               </p>
             </div>
             <div style="display: flex" class="mt-3">
@@ -70,50 +110,8 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
 
-
-  <div class="container" style="margin: 2em auto; width: 50em; padding: 0.5em">
-    <div class="input-group mb-3">
-      <input
-        style="font-size: 1.5em"
-        id="search"
-        class="form-control"
-        placeholder="Search for a user"
-        aria-label="Write the name of user you want to find"
-        aria-describedby="basic-addon2"
-        v-model="userFilter"
-        @keyup="shownUserList = filterUserList(userFilter)"
-      />
-    </div>
-
-    <b-list-group v-for="(user, index) in shownUserList" v-bind:key="index">
-      <b-list-group-item class="justify-content-center">
-        <b-container>
-          <b-row>
-            <b-col cols="10"
-              ><span style="font-size: 1.5em">{{ user.username }}</span></b-col
-            >
-            <b-col cols="2">
-              <b-button
-                variant="success"
-                @click="addFriend(user.uuid)"
-                v-if="user.uuid !== sender.uuid"
-                >Add</b-button
-              >
-            </b-col>
-          </b-row>
-        </b-container>
-      </b-list-group-item>
-    </b-list-group>
-
-    <h4
-      v-show="shownUserList.length === 0"
-      style="text-align: center"
-    >
-      There are no users to show
-    </h4>
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -173,10 +171,10 @@ function onRoomClicked(roomUUID: string) {
 function onTyping() {
   if (chatStore.chatRoomSelected != undefined) {
     chatStore.onUserTyping({
-      room: chatStore.chatRoomSelected.name,
-      user: userStore.loggedIn,
-      userUUID: userStore.loggedIn.uuid,
       text: chatInput.value,
+      room: chatStore.chatRoomSelected.name,
+      userUUID: userStore.loggedIn.uuid,
+      user: userStore.loggedIn,
     });
   }
 }
