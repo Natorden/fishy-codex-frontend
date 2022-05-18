@@ -4,14 +4,18 @@ import type { User } from "@/models/User";
 import type { LoginDto } from "@/models/Login.dto";
 import router from "@/router";
 import { useStorage } from "@vueuse/core";
+import { FriendService } from "@/services/friend.service";
 
 const userService: UserService = new UserService();
+const friendsService: FriendService = new FriendService();
 
 export const UserStore = defineStore({
   id: "userStore",
   state: () => ({
     loggedInUser: useStorage("loggedInUser", { email: "" } as User),
-    users: [] as User[],
+    usersInList: [] as User[],
+    requests: [] as User[],
+    friends: [] as User[],
   }),
   getters: {
     userName: (state) => {
@@ -37,7 +41,18 @@ export const UserStore = defineStore({
       return {} as User;
     },
     users: (state) => {
-      if (state.users != undefined) return state.users;
+      if (state.usersInList != undefined) return state.usersInList;
+      else return [] as User[];
+    },
+    requests: (state) => {
+      if (state.requests != undefined) return state.requests;
+      else return [] as User[];
+    },
+    requestsAmount() {
+      return this.requests.length;
+    },
+    friendsArray: (state) => {
+      if (state.friends != undefined) return state.friends;
       else return [] as User[];
     },
   },
@@ -66,7 +81,7 @@ export const UserStore = defineStore({
         email: email,
         password: password,
       };
-      router.replace({ path: "/profile" });
+      router.replace({ path: "/home" });
       userService
         .logIn(login)
         .then((user) => {
@@ -84,6 +99,28 @@ export const UserStore = defineStore({
       this.loggedInUser = { email: "" } as User;
       localStorage.removeItem("user");
       router.replace({ path: "/login" });
+    },
+    async getAllUsers() {
+      await userService
+        .getAllUsers()
+        .then((userList) => {
+          this.usersInList = [];
+          userList.forEach((userinos) => {
+            this.usersInList.push(userinos);
+          });
+        })
+        .catch((err) => console.log(err.message));
+    },
+    addRequests(userRequestingId: string) {
+      // Get user object of the requesting user and add to request store
+      userService.getUserById(userRequestingId).then((user) => {
+        this.requests.push(user);
+      });
+    },
+    getAllFriends(user: User) {
+      friendsService.getAll(user).then((users) => {
+        this.$state.friends = users;
+      });
     },
   },
 });
