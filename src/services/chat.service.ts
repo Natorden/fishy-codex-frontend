@@ -24,7 +24,7 @@ export class ChatService {
   }
 
   async getAllChatRooms(uuid: string): Promise<ChatRoom[]> {
-    const result = await http.get<ChatRoom[]>("/chat-rooms/" + uuid);
+    const result = await http.get<ChatRoom[]>("/chat-rooms/user/" + uuid);
     return result.data;
   }
 

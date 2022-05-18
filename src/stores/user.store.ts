@@ -13,7 +13,7 @@ export const UserStore = defineStore({
   id: "userStore",
   state: () => ({
     loggedInUser: useStorage("loggedInUser", { email: "" } as User),
-    users: [] as User[],
+    usersInList: [] as User[],
     requests: [] as User[],
     friends: [] as User[],
   }),
@@ -41,7 +41,7 @@ export const UserStore = defineStore({
       return {} as User;
     },
     users: (state) => {
-      if (state.users != undefined) return state.users;
+      if (state.usersInList != undefined) return state.usersInList;
       else return [] as User[];
     },
     requests: (state) => {
@@ -100,14 +100,13 @@ export const UserStore = defineStore({
       localStorage.removeItem("user");
       router.replace({ path: "/login" });
     },
-    getAllUsers() {
-      userService
+    async getAllUsers() {
+      await userService
         .getAllUsers()
-        .then((users) => {
-          this.users = [];
-
-          users.forEach((user) => {
-            this.users.push(user);
+        .then((userList) => {
+          this.usersInList = [];
+          userList.forEach((userinos) => {
+            this.usersInList.push(userinos);
           });
         })
         .catch((err) => console.log(err.message));

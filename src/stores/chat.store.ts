@@ -11,7 +11,7 @@ export const ChatStore = defineStore({
   state: () => ({
     chatRoom: "",
     chatRooms: [] as ChatRoom[],
-    selectedChatRoom: undefined as ChatRoom | undefined,
+    selectedChatRoom: {} as ChatRoom,
     isTyping: [] as User[],
     isListening: [] as string[],
   }),
@@ -27,7 +27,8 @@ export const ChatStore = defineStore({
   },
   actions: {
     createChat(text: string) {
-      if (this.selectedChatRoom != undefined) {
+      if (this.selectedChatRoom.uuid != null) {
+        // console.log(this.selectedChatRoom);
         const user = JSON.parse(<string>localStorage.getItem("user")) as User;
 
         const chat: Chat = {
@@ -36,36 +37,41 @@ export const ChatStore = defineStore({
           user: user,
           userUUID: user.uuid,
         };
+        //  console.log(chat);
         chatService.createChat(chat);
       }
     },
     receiveChat(chat: Chat) {
-      if (this.selectedChatRoom != undefined) {
+      if (this.selectedChatRoom.uuid != null) {
         this.selectedChatRoom.chats.push(chat);
       }
     },
     loadChatRooms() {
       const user = JSON.parse(<string>localStorage.getItem("user")) as User;
-      chatService
-        .getAllChatRooms(user.uuid)
-        .then((chatRooms) => (this.chatRooms = chatRooms));
+      chatService.getAllChatRooms(user.uuid).then((listOFChatRooms) => {
+        this.chatRooms = [];
+        listOFChatRooms.forEach((chatRoom) => {
+          this.chatRooms.push(chatRoom);
+        });
+      });
     },
-    selectChatRoom(chatRoomUuid: string) {
-      if (this.selectedChatRoom != undefined)
+    selectChatRoom(chatRoomas: any) {
+      if (this.selectedChatRoom != undefined) {
         chatService.disconnectFromChatRoom(this.selectedChatRoom.uuid);
-
-      chatService.loadChatRoom(chatRoomUuid).then((chatRoom) => {
+      }
+      // console.log(chatRoomas);
+      chatService.loadChatRoom(chatRoomas.uuid).then((chatRoom) => {
         this.selectedChatRoom = chatRoom;
-        chatService.listenToChatRoom(chatRoom.uuid, (chat) => {
+        chatService.listenToChatRoom(chatRoomas.uuid, (chat) => {
           this.receiveChat(chat);
         });
       });
     },
     newChatRoom(name: string) {
       const user = JSON.parse(<string>localStorage.getItem("user")) as User;
-      chatService
-        .createChatRoom(name, user.uuid)
-        .then((chatRoom) => this.chatRooms.push(chatRoom));
+      chatService.createChatRoom(name, user.uuid).then((chatRoom) => {
+        this.chatRooms.push(chatRoom);
+      });
     },
     onUserTyping(chat: Chat) {
       chat.chatRoom = this.chatRoom;
