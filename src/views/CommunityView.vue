@@ -4,7 +4,7 @@
     style="margin: 2em auto; width: 150em; padding: 0.5em; height: 60vh"
   >
     <div class="row h-100">
-      <div class="col-4 widthChange">
+      <div class="col-4 width25">
         <div class="input-group mb-3">
           <input
             style="font-size: 1.5em"
@@ -41,7 +41,7 @@
           There are no users to show
         </h4>
       </div>
-      <div class="col-4" width="25%">
+      <div class="col-4 width25">
         <div class="card h-100">
           <div class="card-body">
             <h5 class="card-title">Chat Rooms</h5>
@@ -74,7 +74,7 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col width50">
         <div class="card h-120">
           <div class="card-body">
             <div class="messages">
@@ -234,9 +234,11 @@ function createNewChatRoom() {
   cursor: pointer;
 }
 
-.widthChange {
+.width25 {
   width: 25% !important;
-  background-color: aliceblue;
+}
+.width50 {
+  width: 50% !important;
 }
 
 .selected {
