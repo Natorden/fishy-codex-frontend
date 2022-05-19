@@ -43,6 +43,9 @@
             <RouterLink to="" @click="openCommunity" id="navbarItem">Community</RouterLink> |
           </li>
           <li class="nav-item active" v-show="isLoggedIn.call()">
+            <RouterLink to="/friends" id="navbarItem">Friends</RouterLink>
+          </li>
+          <li class="nav-item active" v-show="isLoggedIn.call()">
             <RouterLink to="" @click="editProfile" id="navbarItem">My Profile</RouterLink> |
           </li>
           <li class="nav-item active" v-show="isLoggedIn.call()">
@@ -60,7 +63,6 @@
         </ul>
     </div>
   </nav>
-
   <RouterView />
 </template>
 

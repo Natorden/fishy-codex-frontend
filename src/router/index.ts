@@ -7,6 +7,7 @@ import FishEdit from "../views/FishEdit.vue";
 import ProfileView from "../views/ProfileView.vue";
 import CommunityView from "../views/CommunityView.vue";
 import MyFishView from "../views/MyFishView.vue";
+import FriendRequests from "../views/FriendRequests.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,6 +51,11 @@ const router = createRouter({
       path: "/fish",
       name: "Fish",
       component: MyFishView,
+    },
+    {
+      path: "/friends",
+      name: "Friends",
+      component: FriendRequests,
     },
   ],
 });

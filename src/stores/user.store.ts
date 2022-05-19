@@ -111,11 +111,14 @@ export const UserStore = defineStore({
         })
         .catch((err) => console.log(err.message));
     },
-    addRequests(userRequestingId: string) {
+    addFriendRequests(userRequestingId: string) {
       // Get user object of the requesting user and add to request store
       userService.getUserById(userRequestingId).then((user) => {
         this.requests.push(user);
       });
+    },
+    removeFriendRequest(index: number) {
+      this.requests.splice(index, -1);
     },
     getAllFriends(user: User) {
       friendsService.getAll(user).then((users) => {
