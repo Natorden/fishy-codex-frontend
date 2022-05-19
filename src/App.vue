@@ -28,7 +28,7 @@
     <div class="collapse navbar-collapse" style="margin-left: 1em">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <RouterLink to="/home" class="navbarItem">Home</RouterLink> |
+          <RouterLink to="/home" class="navbarItem">Home</RouterLink>
         </li>
       </ul>
     </div>
@@ -37,19 +37,21 @@
           <!--        buttons shown when user logged in-->
           <span v-show="isLoggedIn.call()" id="username">{{ userStore.userName }}</span>
           <li class="nav-item active" v-show="isLoggedIn.call()">
-            <RouterLink to="" @click="openHome" class="navbarItem">My Fish</RouterLink> |
+            <RouterLink to="" @click="openHome" class="navbarItem">My Fish</RouterLink>
           </li>
           <li class="nav-item active" v-show="isLoggedIn.call()">
-            <RouterLink to="" @click="openCommunity" class="navbarItem">Community</RouterLink> |
+            <RouterLink to="" @click="openCommunity" class="navbarItem">Community</RouterLink>
           </li>
           <li class="nav-item active" v-show="isLoggedIn.call()">
-            <RouterLink to="/friends" class="navbarItem">Friends</RouterLink>
+            <RouterLink to="/friends" class="navbarItem">Friends
+              <b-badge variant="success" style="font-size: 0.7em">{{ requestAmount }}</b-badge>
+            </RouterLink>
           </li>
           <li class="nav-item active" v-show="isLoggedIn.call()">
-            <RouterLink to="" @click="editProfile" class="navbarItem">My Profile</RouterLink> |
+            <RouterLink to="" @click="editProfile" class="navbarItem">My Profile</RouterLink>
           </li>
           <li class="nav-item active" v-show="isLoggedIn.call()">
-            <RouterLink to="" @click="logout" class="navbarItem">Log Out</RouterLink> |
+            <RouterLink to="" @click="logout" class="navbarItem">Log Out</RouterLink>
           </li>
           <li class="nav-item active" v-show="!isLoggedIn.call()">
             <RouterLink
@@ -68,14 +70,20 @@
 
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
+import {io} from "socket.io-client";
 import {UserStore} from "@/stores/user.store";
 import type {User} from "@/models/User";
-import {ref} from "vue";
+import { onUpdated, ref } from "vue";
 import router from "@/router";
+import {RequestService} from "@/services/request.service";
+const requestService: RequestService = new RequestService();
 
 const userStore = UserStore();
 let sender = ref({} as User);
+let requestAmount = ref(0);
 
+let socket = io("localhost:3001");
+socket.connect();
 
 function isLoggedIn(): boolean {
   sender.value = JSON.parse(<string>localStorage.getItem("user")) as User;
@@ -97,6 +105,26 @@ function openCommunity(){
 function openHome(){
   router.push({ path: "/fish" });
 }
+
+onUpdated(() => {
+  if(sender.value != null) {
+    socket.on(sender.value.uuid, from => {
+      userStore.addFriendRequests(from);
+      requestAmount.value++;
+    });
+
+    // Find requests for the logged-in user
+    requestService.getFriendRequestByUserId(sender.value.uuid).then((r) => {
+      requestAmount.value = r.length;
+      r.forEach(req => {
+        // Add them to the requests store
+        userStore.addFriendRequests(req.senderUserId);
+      });
+    });
+    userStore.getAllFriends(sender.value);
+    userStore.getAllUsers();
+  }
+});
 
 </script>
 

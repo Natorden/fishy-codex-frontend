@@ -24,4 +24,13 @@ export class RequestService {
     );
     return result.data;
   }
+
+  async deleteFriendRequestWithRequestUuid(
+    requestUuid: string
+  ): Promise<FriendRequest> {
+    const result = await http.delete<FriendRequest>(
+      "/friend-requests/" + requestUuid
+    );
+    return result.data;
+  }
 }

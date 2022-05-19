@@ -111,17 +111,17 @@ export const UserStore = defineStore({
         })
         .catch((err) => console.log(err.message));
     },
-    addFriendRequests(userRequestingId: string) {
+    async addFriendRequests(userRequestingId: string) {
       // Get user object of the requesting user and add to request store
-      userService.getUserById(userRequestingId).then((user) => {
+      await userService.getUserById(userRequestingId).then((user) => {
         this.requests.push(user);
       });
     },
     removeFriendRequest(index: number) {
       this.requests.splice(index, -1);
     },
-    getAllFriends(user: User) {
-      friendsService.getAll(user).then((users) => {
+    async getAllFriends(user: User) {
+      await friendsService.getAll(user).then((users) => {
         this.$state.friends = users;
       });
     },
