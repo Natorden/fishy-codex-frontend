@@ -28,16 +28,13 @@ export const ChatStore = defineStore({
   actions: {
     createChat(text: string) {
       if (this.selectedChatRoom.uuid != null) {
-        // console.log(this.selectedChatRoom);
         const user = JSON.parse(<string>localStorage.getItem("user")) as User;
-
         const chat: Chat = {
           text: text,
           chatRoom: this.selectedChatRoom.uuid,
           user: user,
           userUUID: user.uuid,
         };
-        //  console.log(chat);
         chatService.createChat(chat);
       }
     },
@@ -55,11 +52,10 @@ export const ChatStore = defineStore({
         });
       });
     },
-    selectChatRoom(chatRoomas: any) {
+    selectChatRoom(chatRoomas: ChatRoom) {
       if (this.selectedChatRoom != undefined) {
         chatService.disconnectFromChatRoom(this.selectedChatRoom.uuid);
       }
-      // console.log(chatRoomas);
       chatService.loadChatRoom(chatRoomas.uuid).then((chatRoom) => {
         this.selectedChatRoom = chatRoom;
         chatService.listenToChatRoom(chatRoomas.uuid, (chat) => {

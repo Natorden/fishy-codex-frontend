@@ -14,6 +14,7 @@ export class RequestService {
       senderUserId: senderUserId,
       receiverUserId: receiverUserId,
     };
+    console.log(request);
     this.socket.emit("createFriendRequest", request);
   }
 

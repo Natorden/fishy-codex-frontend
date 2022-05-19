@@ -1,7 +1,8 @@
 <template>
   <header>
     <h3>
-      Welcome to the Fishy Codex, if you already have an account,
+      (temprary text, remove later )Welcome to the Fishy Codex, if you already
+      have an account,
       <router-link to="/login">login</router-link>. If you're new here,
       <router-link to="/register">register</router-link> an account
     </h3>
