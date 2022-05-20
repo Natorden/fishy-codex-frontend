@@ -107,11 +107,11 @@ function openHome(){
 
 onUpdated(() => {
   if(sender.value != null) {
-   /* socket.on(sender.value.uuid, from => {
+    socket.on(sender.value.uuid, from => {
       console.log(from);
       userStore.addFriendRequests(from);
-      requestAmount.value++;
-    });*/
+      //requestAmount.value++;
+    });
 
     // Find requests for the logged-in user
     requestService.getFriendRequestByUserId(sender.value.uuid).then((r) => {

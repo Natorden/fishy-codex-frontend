@@ -50,10 +50,13 @@ const nameInput = ref<string>("");
 const ageInput = ref<number>();
 const emailInput = ref<string>("");
 const passwordInput =ref<string>("");
+
 nameInput.value = userStore.userName;
 ageInput.value = userStore.userAge;
 emailInput.value = userStore.userEmail;
 passwordInput.value = userStore.userPassword
+
+console.log(nameInput.value, ageInput.value)
 
 
   function isLoggedIn(): boolean {

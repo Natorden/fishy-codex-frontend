@@ -113,8 +113,8 @@
               </button>
             </div>
             <hr />
-            <div class="messages">
-              <ul v-if="currentChatRoom != undefined">
+            <div class="messages" style="overflow-y: scroll; height: 60vh">
+              <ul v-if="currentChatRoom !== undefined">
                 <li v-for="chat in currentChatRoom.chats">
                   {{ chat.user.name }}: {{ chat.text }}
                 </li>

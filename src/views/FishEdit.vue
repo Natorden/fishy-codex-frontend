@@ -20,24 +20,28 @@
           style="margin-bottom: 0.5em"
         >
         </b-form-input>
-        <b-form-input
-          size="md"
-          id="number"
-          type="number"
-          v-model="lengthInput"
-          placeholder="Enter the fish length"
-          style="margin-bottom: 0.5em"
-        >
-        </b-form-input>
-        <b-form-input
-          size="md"
-          id="number"
-          type="number"
-          v-model="weightInput"
-          placeholder="Enter the fish weight"
-          style="margin-bottom: 0.5em"
-        >
-        </b-form-input>
+        <b-input-group append="cm" style="margin-bottom: 0.5em">
+          <b-form-input
+            size="md"
+            id="number"
+            type="number"
+            min="0"
+            v-model="lengthInput"
+            placeholder="Enter the fish length"
+          >
+          </b-form-input>
+        </b-input-group>
+        <b-input-group append="kg" style="margin-bottom: 0.5em">
+          <b-form-input
+            size="md"
+            id="number"
+            type="number"
+            min="0"
+            v-model="weightInput"
+            placeholder="Enter the fish weight"
+          >
+          </b-form-input>
+        </b-input-group>
       </div>
       <b-button
         class="container justify-content-center"
