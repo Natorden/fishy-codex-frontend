@@ -22,7 +22,6 @@
               />
             </div>
             <hr />
-
             <b-list-group
               v-for="(user, index) in shownUserList"
               v-bind:key="index"
@@ -85,6 +84,7 @@
                 v-bind:key="chatRoom.uuid"
               >
                 {{ chatRoom.name }}
+                <hr />
               </li>
             </ul>
           </div>

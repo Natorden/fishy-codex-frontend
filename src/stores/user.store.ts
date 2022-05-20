@@ -5,6 +5,8 @@ import type { LoginDto } from "@/models/Login.dto";
 import router from "@/router";
 import { useStorage } from "@vueuse/core";
 import { FriendService } from "@/services/friend.service";
+import type { FriendRequest } from "@/models/FriendRequest";
+import type { FriendRequestTransfer } from "@/models/FriendRequestTransfer";
 
 const userService: UserService = new UserService();
 const friendsService: FriendService = new FriendService();
@@ -14,7 +16,7 @@ export const UserStore = defineStore({
   state: () => ({
     loggedInUser: useStorage("loggedInUser", { email: "" } as User),
     usersInList: [] as User[],
-    requests: [] as User[],
+    requestsList: [] as FriendRequestTransfer[],
     friends: [] as User[],
   }),
   getters: {
@@ -44,12 +46,13 @@ export const UserStore = defineStore({
       if (state.usersInList != undefined) return state.usersInList;
       else return [] as User[];
     },
-    requests: (state) => {
-      if (state.requests != undefined) return state.requests;
-      else return [] as User[];
+    getRequests: (state) => {
+      if (state.requestsList != undefined) return state.requestsList;
+      else return [] as FriendRequestTransfer[];
     },
-    requestsAmount() {
-      return this.requests.length;
+    getRequestAmount: (state) => {
+      if (state.requestsList != undefined) return state.requestsList.length;
+      else return 0;
     },
     friendsArray: (state) => {
       if (state.friends != undefined) return state.friends;
@@ -111,14 +114,15 @@ export const UserStore = defineStore({
         })
         .catch((err) => console.log(err.message));
     },
-    async addFriendRequests(userRequestingId: string) {
-      // Get user object of the requesting user and add to request store
-      await userService.getUserById(userRequestingId).then((user) => {
-        this.requests.push(user);
-      });
+    async addFriendRequests(newRequest: FriendRequestTransfer) {
+      this.requestsList.push(newRequest);
+    },
+    async addAllRequests(allRequests: FriendRequestTransfer[]) {
+      this.requestsList = [];
+      this.requestsList = allRequests;
     },
     removeFriendRequest(index: number) {
-      this.requests.splice(index, -1);
+      this.requestsList.splice(index, -1);
     },
     async getAllFriends(user: User) {
       await friendsService.getAll(user).then((users) => {

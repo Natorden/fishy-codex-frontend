@@ -44,7 +44,7 @@
           </li>
           <li class="nav-item active" v-show="isLoggedIn.call()">
             <RouterLink to="/friends" class="navbarItem">Friends
-              <b-badge variant="success" style="font-size: 0.7em">{{ requestAmount }}</b-badge>
+              <b-badge variant="success" style="font-size: 0.7em">{{ userStore.getRequestAmount }}</b-badge>
             </RouterLink>
           </li>
           <li class="nav-item active" v-show="isLoggedIn.call()">
@@ -80,7 +80,6 @@ const requestService: RequestService = new RequestService();
 
 const userStore = UserStore();
 let sender = ref({} as User);
-let requestAmount = ref(0);
 
 let socket = io("localhost:3001");
 socket.connect();
@@ -108,18 +107,15 @@ function openHome(){
 
 onUpdated(() => {
   if(sender.value != null) {
-    socket.on(sender.value.uuid, from => {
+   /* socket.on(sender.value.uuid, from => {
+      console.log(from);
       userStore.addFriendRequests(from);
       requestAmount.value++;
-    });
+    });*/
 
     // Find requests for the logged-in user
     requestService.getFriendRequestByUserId(sender.value.uuid).then((r) => {
-      requestAmount.value = r.length;
-      r.forEach(req => {
-        // Add them to the requests store
-        userStore.addFriendRequests(req.senderUserId);
-      });
+      userStore.addAllRequests(r);
     });
     userStore.getAllFriends(sender.value);
     userStore.getAllUsers();
@@ -129,12 +125,6 @@ onUpdated(() => {
 </script>
 
 <style>
-#navbarItem {
-  margin-right: 1em;
-  text-decoration: none;
-  color: ghostwhite;
-  font-size: 1.2em;
-}
 .navbarItem {
   margin-right: 1em;
   text-decoration: none;
