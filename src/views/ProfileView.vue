@@ -10,20 +10,36 @@
           size="md"
           v-model="nameInput"
           style="margin-bottom: 0.5em"
+          placeholder="Name"
         >
         </b-form-input>
+        <b-input-group
+            append="years"
+            style="margin-bottom: 0.5em">
+          <b-form-input
+              size="md"
+              v-model="ageInput"
+              id='number'
+              type= 'number'
+              min="0"
+              placeholder="Age"
+          >
+          </b-form-input>
+        </b-input-group>
         <b-form-input
-            size="md" v-model="ageInput" id='number' type= 'number'  style="margin-bottom: 0.5em"
-        >
-        </b-form-input>
-        <b-form-input
-            size="md" id='email' type= 'email' v-model="emailInput" style="margin-bottom: 0.5em"
+            size="md"
+            id='email'
+            type= 'email'
+            v-model="emailInput"
+            placeholder="Email"
+            style="margin-bottom:0.5em"
         >
         </b-form-input>
         <b-form-input
           size="md"
           id="password"
           v-model="passwordInput"
+          placeholder="Password"
         >
         </b-form-input>
       </div>

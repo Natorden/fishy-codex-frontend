@@ -5,7 +5,6 @@ import type { LoginDto } from "@/models/Login.dto";
 import router from "@/router";
 import { useStorage } from "@vueuse/core";
 import { FriendService } from "@/services/friend.service";
-import type { FriendRequest } from "@/models/FriendRequest";
 import type { FriendRequestTransfer } from "@/models/FriendRequestTransfer";
 
 const userService: UserService = new UserService();
@@ -74,17 +73,18 @@ export const UserStore = defineStore({
     ) {
       userService
         .updateUser(id, name, age, email, password)
-        .catch((err) => console.log(err.message));
-    },
-    removeUser(id: string) {
-      userService
-        .removeUser(id)
         .then((user) => {
           if (user) {
+            this.loggedInUser = user;
+            const parsed = JSON.stringify(this.loggedInUser);
+            localStorage.setItem("user", parsed);
             return true;
           }
         })
         .catch((err) => console.log(err.message));
+    },
+    removeUser(id: string) {
+      userService.removeUser(id).catch((err) => console.log(err.message));
     },
     logInUser(email: string, password: string): boolean {
       const login: LoginDto = {
