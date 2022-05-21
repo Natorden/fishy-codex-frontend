@@ -77,7 +77,14 @@ export const UserStore = defineStore({
         .catch((err) => console.log(err.message));
     },
     removeUser(id: string) {
-      userService.removeUser(id).catch((err) => console.log(err.message));
+      userService
+        .removeUser(id)
+        .then((user) => {
+          if (user) {
+            return true;
+          }
+        })
+        .catch((err) => console.log(err.message));
     },
     logInUser(email: string, password: string): boolean {
       const login: LoginDto = {

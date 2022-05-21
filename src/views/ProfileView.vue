@@ -34,6 +34,13 @@
         @click="updateUser"
         >Update Your Profile
       </b-button>
+      <b-button
+        class="container justify-content-center"
+        block
+        variant="success"
+        @click="deleteUser"
+        >Delete account
+      </b-button>
     </b-card>
   </div>
 </template>
@@ -80,6 +87,11 @@ function updateUser() {
       );
   }
   router.push({ path: "/fish" });
+}
+
+function deleteUser() {
+  userStore.removeUser(userStore.loggedIn.uuid);
+  userStore.logout();
 }
 </script>
 
