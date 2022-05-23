@@ -6,6 +6,7 @@ import router from "@/router";
 import { useStorage } from "@vueuse/core";
 import { FriendService } from "@/services/friend.service";
 import type { FriendRequestTransfer } from "@/models/FriendRequestTransfer";
+import type { Friend } from "@/models/Friend";
 
 const userService: UserService = new UserService();
 const friendsService: FriendService = new FriendService();
@@ -16,7 +17,8 @@ export const UserStore = defineStore({
     loggedInUser: useStorage("loggedInUser", { email: "" } as User),
     usersInList: [] as User[],
     requestsList: [] as FriendRequestTransfer[],
-    friends: [] as User[],
+    friendUsers: [] as User[],
+    friends: [] as Friend[],
   }),
   getters: {
     userName: (state) => {
@@ -54,7 +56,7 @@ export const UserStore = defineStore({
       else return 0;
     },
     friendsArray: (state) => {
-      if (state.friends != undefined) return state.friends;
+      if (state.friendUsers != undefined) return state.friendUsers;
       else return [] as User[];
     },
   },
@@ -131,9 +133,14 @@ export const UserStore = defineStore({
     removeFriendRequest(index: number) {
       this.requestsList.splice(index, -1);
     },
-    async getAllFriends(user: User) {
-      await friendsService.getAll(user).then((users) => {
-        this.$state.friends = users;
+    async getAllFriendsById(user: User) {
+      await friendsService.getAllById(user).then((users) => {
+        this.$state.friendUsers = users;
+      });
+    },
+    async getAllFriends() {
+      await friendsService.getAll().then((friends) => {
+        this.$state.friends = friends;
       });
     },
   },

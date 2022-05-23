@@ -9,8 +9,17 @@ export class FriendService {
     return result.data;
   }
 
-  async getAll(user: User): Promise<User[]> {
+  async getAllById(user: User): Promise<User[]> {
     const result = await http.get<User[]>("/friends/users" + user.uuid);
     return result.data;
+  }
+
+  async getAll(): Promise<Friend[]> {
+    const result = await http.get<Friend[]>("/friends");
+    return result.data;
+  }
+
+  async remove(friend: Friend) {
+    await http.delete<Friend>("/friends/" + friend.uuid);
   }
 }

@@ -117,7 +117,7 @@ onUpdated(() => {
     requestService.getFriendRequestByUserId(sender.value.uuid).then((r) => {
       userStore.addAllRequests(r);
     });
-    userStore.getAllFriends(sender.value);
+    userStore.getAllFriendsById(sender.value);
     userStore.getAllUsers();
   }
 });

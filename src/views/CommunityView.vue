@@ -38,7 +38,7 @@
                       <b-button
                         variant="success"
                         @click="addFriend(user.uuid)"
-                        v-if="user.uuid !== sender.uuid"
+                        v-if="user.uuid !== sender.uuid && !isFriend(user.uuid)"
                         >Add</b-button
                       >
                     </b-col>
@@ -82,11 +82,12 @@
                 v-for="chatRoom in chatStore.chatRooms"
                 v-on:click="onRoomClicked(chatRoom)"
                 v-bind:key="chatRoom.uuid"
+                style="margin-bottom: 5px; border-bottom: 1px solid #ccc"
               >
                 {{ chatRoom.name }}
-                <hr />
               </li>
             </ul>
+            <hr />
           </div>
         </div>
       </div>
@@ -147,8 +148,11 @@ import {
 } from "bootstrap-vue-3";
 import { storeToRefs } from "pinia";
 import type { ChatRoom } from "@/models/ChatRoom";
+import { FriendService } from "@/services/friend.service";
+import type { Friend } from "@/models/Friend";
 
 const requestService: RequestService = new RequestService();
+const friendService: FriendService = new FriendService();
 const chatStore = ChatStore();
 const userStore = UserStore();
 
@@ -229,6 +233,37 @@ function onTyping() {
 function addFriend(friendId: string) {
   if (isLoggedIn()) requestService.sendFriendRequest(sender.uuid, friendId);
   console.log(sender.uuid, friendId);
+}
+
+//TODO: Optimize this
+function isFriend(friendId: string): boolean {
+  userStore.$state.friendUsers.forEach((friend: User) => {
+    if (friend.uuid === friendId) {
+      console.log("is friend");
+      return true;
+    }
+  });
+  console.log(friendId + "is not friend");
+  return false;
+}
+
+//TODO: Optimize this
+function removeFriend(friendId: string) {
+  userStore.$state.friends.forEach((friend: Friend) => {
+    switch (friendId) {
+      case friend.userOneId:
+        if (friend.userTwoId === userStore.loggedIn.uuid) {
+          friendService.remove(friend);
+        }
+        break;
+      case friend.userTwoId:
+        if (friend.userOneId === userStore.loggedIn.uuid) {
+          friendService.remove(friend);
+        }
+        break;
+    }
+  });
+  return false;
 }
 
 function sendMsg() {
