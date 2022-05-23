@@ -43,7 +43,7 @@
             <RouterLink to="" @click="openCommunity" class="navbarItem">Community</RouterLink>
           </li>
           <li class="nav-item active" v-show="isLoggedIn.call()">
-            <RouterLink to="/friends" class="navbarItem">Friends
+            <RouterLink to="/friends" class="navbarItem">Friend Requests
               <b-badge variant="success" style="font-size: 0.7em">{{ userStore.getRequestAmount }}</b-badge>
             </RouterLink>
           </li>

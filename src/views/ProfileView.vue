@@ -6,14 +6,8 @@
         class="container justify-content-center"
         style="width: 25em; margin-bottom: 4em"
       >
-        ** Fixme: make it show up somehow **
-        <b-form-file
-          v-model="profileImage"
-          label="Profile Picture"
-          placeholder="Upload your profile picture"
-          accept="image/*"
-          ></b-form-file>
-        <input type="file" ref="file" @change="selectFile" />
+        <input ref="profileImage" type="file" @input="pickImage">
+        <div class="imagePreviewWrapper" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage"></div>
         <div class="mt-3">Selected file: {{ profileImage ? profileImage.name : '' }}</div>
         <b-button @click="profileImage = null">Reset via v-model</b-button>
         <b-button @click="uploadProfileImage" style="margin: 5px">Upload Image</b-button>
@@ -117,7 +111,7 @@ function updateUser() {
           nameInput.value,
           ageInput.value,
           emailInput.value,
-          passwordInput.value
+          passwordInput.value,
       );
   }
   router.push({ path: "/fish" });

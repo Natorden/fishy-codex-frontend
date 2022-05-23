@@ -11,7 +11,7 @@
           type="email"
           size="md"
           v-model="emailInput"
-          placeholder="Enter your username"
+          placeholder="Enter your email"
           style="margin-bottom: 0.5em"
         >
         </b-form-input>

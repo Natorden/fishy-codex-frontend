@@ -64,6 +64,7 @@
                 class="form-control"
                 placeholder="Enter a room name..."
                 v-model="chatRoomInput"
+                minlength="3"
               />
               <button
                 type="button"
@@ -104,6 +105,7 @@
                 placeholder="Enter a message..."
                 v-model="chatInput"
                 @keydown="onTyping"
+                minlength="1"
               />
               <button
                 type="button"
@@ -112,6 +114,14 @@
               >
                 Send
               </button>
+              <b-dropdown
+                v-for="(fish, index) in shownFishList"
+                v-bind:key="index"
+              >
+                <b-dropdown-item v-on:click="onFishClicked(fish)"
+                  >{{ fish.catchName }}
+                </b-dropdown-item>
+              </b-dropdown>
             </div>
             <hr />
             <div class="messages" style="overflow-y: scroll; height: 60vh">
@@ -150,31 +160,38 @@ import { storeToRefs } from "pinia";
 import type { ChatRoom } from "@/models/ChatRoom";
 import { FriendService } from "@/services/friend.service";
 import type { Friend } from "@/models/Friend";
+import type { Fish } from "@/models/Fish";
+import { FishStore } from "@/stores/fish.store";
 
 const requestService: RequestService = new RequestService();
 const friendService: FriendService = new FriendService();
 const chatStore = ChatStore();
 const userStore = UserStore();
+const fishStore = FishStore();
 
-const chatInput = ref("");
-const chatRoomInput = ref("");
+//fish
+const shownFishList = ref([] as Fish[]);
+const { fishy } = storeToRefs(fishStore);
+let fishList = [] as Fish[];
 
+//users
 let userList = [] as User[];
 const shownUserList = ref([] as User[]);
+const { usersInList } = storeToRefs(userStore);
 
+//chat rooms
 let chatRoomList = [] as ChatRoom[];
 const shownChatRoomList = ref([] as ChatRoom[]);
 const userFilter = ref("");
-
-const { usersInList } = storeToRefs(userStore);
 const { chatRooms, chatRoomSelected } = storeToRefs(chatStore);
+const chatInput = ref("");
+const chatRoomInput = ref("");
+const currentChatRoom = ref({} as ChatRoom);
 
 chatStore.loadChatRooms();
 chatStore.updateIsTyping();
 userStore.getAllUsers();
 const sender = userStore.loggedIn;
-
-const currentChatRoom = ref({} as ChatRoom);
 
 function isLoggedIn(): boolean {
   return !!localStorage.getItem("user");
@@ -215,6 +232,17 @@ watch(chatRooms, (chatRooms) => {
   }
 });
 
+watch(fishy, (fish) => {
+  fishList = [] as Fish[];
+  fish.forEach((fishes) => {
+    if (fishes.user.uuid == userStore.loggedIn.uuid) {
+      fishList.push(fishes);
+    }
+  });
+  shownFishList.value = fishList;
+  console.table(fishList);
+});
+
 function onRoomClicked(room: ChatRoom) {
   chatStore.selectChatRoom(room);
 }
@@ -233,6 +261,10 @@ function onTyping() {
 function addFriend(friendId: string) {
   if (isLoggedIn()) requestService.sendFriendRequest(sender.uuid, friendId);
   console.log(sender.uuid, friendId);
+}
+
+function onFishClicked(fish: Fish) {
+  console.log(fish.catchName);
 }
 
 //TODO: Optimize this
