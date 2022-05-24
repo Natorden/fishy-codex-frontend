@@ -19,7 +19,6 @@
           <b-button @click="uploadProfileImage" style="margin: 5px">Upload Image</b-button>
           <b-progress :value="uploadProgress" :max="100" show-progress animated style="margin-bottom: 5px"></b-progress>
         </div>
-
         <b-input-group
             append="years"
             style="margin-bottom: 0.5em">
@@ -98,6 +97,7 @@ const fileInput = ref("");
 function clearView(): any {
   profileImage.value = (null as unknown) as File;
   fileInput.value.value = '';
+  profileImageUrl.value = "https://firebasestorage.googleapis.com/v0/b/fishycodexv2.appspot.com/o/profileImages%2FDefault-avatar.png?alt=media&token=65e42ccf-6ad6-499d-a2a0-fa14dc15f900";
 }
 
 function getFiles(event : any): any {

@@ -14,6 +14,9 @@
       <b-list-group-item class="justify-content-center">
         <b-container>
           <b-row>
+            <b-col cols="2">
+              <img :src="fish.image" width="50" height="50" alt="Fish Image" />
+            </b-col>
             <b-col>
               <b-row>
                 <b-col>

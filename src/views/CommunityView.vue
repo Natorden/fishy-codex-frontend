@@ -29,7 +29,16 @@
               <b-list-group-item class="justify-content-center">
                 <b-container>
                   <b-row>
-                    <b-col cols="10"
+                    <b-col cols="4">
+                      <img
+                        :src="user.avatar"
+                        width="50"
+                        height="50"
+                        alt="Profile picture"
+                        style="border-radius: 50%"
+                      />
+                    </b-col>
+                    <b-col cols="8"
                       ><span style="font-size: 1.5em">{{
                         user.name
                       }}</span></b-col
@@ -115,10 +124,9 @@
                 Send
               </button>
               <b-dropdown
-                text="Block Level Dropdown Menu"
+                text="Send fish"
                 block
                 variant="primary"
-                class="m-2"
                 menu-class="w-100"
               >
                 <b-dropdown-item
@@ -133,6 +141,13 @@
             <div class="messages" style="overflow-y: scroll; height: 60vh">
               <ul v-if="currentChatRoom !== undefined">
                 <li v-for="chat in currentChatRoom.chats">
+                  <img
+                    :src="chat.user.avatar"
+                    width="50"
+                    height="50"
+                    alt="Profile picture"
+                    style="border-radius: 50%"
+                  />
                   {{ chat.user.name }}: {{ chat.text }}
                 </li>
               </ul>

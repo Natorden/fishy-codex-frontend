@@ -35,6 +35,13 @@
       <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav">
           <!--        buttons shown when user logged in-->
+          <img
+              :src="userStore.userAvatar"
+              width="50"
+              height="50"
+              alt="Profile picture"
+              style="margin-right: 1em; border-radius: 50%;"
+          />
           <span v-show="isLoggedIn.call()" id="username">{{ userStore.userName }}</span>
           <li class="nav-item active" v-show="isLoggedIn.call()">
             <RouterLink to="" @click="openHome" class="navbarItem">My Fish</RouterLink>
