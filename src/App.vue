@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-dark bg-dark navbar-expand-md">
     <img
-      src="@/assets/FishyCodex.png"
+      src="@/assets/Images/FishyCodex.png"
       width="50"
       height="50"
       alt="logo"

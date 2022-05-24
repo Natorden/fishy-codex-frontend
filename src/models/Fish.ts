@@ -4,5 +4,6 @@ export interface Fish {
   species: string;
   length: number;
   weight: number;
+  image: string;
   userUuid: string;
 }

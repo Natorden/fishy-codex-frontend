@@ -7,14 +7,16 @@ export class FishService {
     species: string,
     length: number,
     weight: number,
+    image: string,
     userUuid: string
   ): Promise<Fish> {
-    console.log(catchName, species, length, weight, userUuid);
+    console.log(catchName, species, length, weight, image, userUuid);
     const result = await http.post<Fish>("/fishy/", {
       catchName: catchName,
       species: species,
       length: length,
       weight: weight,
+      image: image,
       userUuid: userUuid,
     });
     console.log(result.data);
@@ -26,14 +28,17 @@ export class FishService {
     catchName: string,
     species: string,
     length: number,
-    weight: number
+    weight: number,
+    image: string
   ): Promise<Fish> {
     const result = await http.patch<Fish>("/fishy/" + id, {
       catchName: catchName,
       species: species,
       length: length,
       weight: weight,
+      image: image,
     });
+    console.log(result.data);
     return result.data;
   }
 

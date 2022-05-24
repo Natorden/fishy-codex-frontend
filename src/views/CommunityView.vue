@@ -115,10 +115,16 @@
                 Send
               </button>
               <b-dropdown
-                v-for="(fish, index) in shownFishList"
-                v-bind:key="index"
+                text="Block Level Dropdown Menu"
+                block
+                variant="primary"
+                class="m-2"
+                menu-class="w-100"
               >
-                <b-dropdown-item v-on:click="onFishClicked(fish)"
+                <b-dropdown-item
+                  v-for="(fish, index) in shownFishList"
+                  v-bind:key="index"
+                  v-on:click="onFishClicked(fish)"
                   >{{ fish.catchName }}
                 </b-dropdown-item>
               </b-dropdown>
@@ -187,11 +193,23 @@ const { chatRooms, chatRoomSelected } = storeToRefs(chatStore);
 const chatInput = ref("");
 const chatRoomInput = ref("");
 const currentChatRoom = ref({} as ChatRoom);
-
+const selectedItem = ref("");
 chatStore.loadChatRooms();
 chatStore.updateIsTyping();
 userStore.getAllUsers();
 const sender = userStore.loggedIn;
+
+let show = ref(false);
+const isOpen = () => (show.value = !show.value);
+
+const loopList = fishStore.getAllFishes;
+fishList = [] as Fish[];
+loopList.forEach((fishes) => {
+  if (fishes.user.uuid == userStore.loggedIn.uuid) {
+    fishList.push(fishes);
+  }
+});
+shownFishList.value = fishList;
 
 function isLoggedIn(): boolean {
   return !!localStorage.getItem("user");

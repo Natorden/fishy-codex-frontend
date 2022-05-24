@@ -28,10 +28,11 @@ export const FishStore = defineStore({
       species: string,
       length: number,
       weight: number,
+      image: string,
       userUuid: string
     ) {
       fishService
-        .createFish(catchName, species, length, weight, userUuid)
+        .createFish(catchName, species, length, weight, image, userUuid)
         .catch((err) => console.log(err.message));
     },
     async updateFish(
@@ -39,10 +40,11 @@ export const FishStore = defineStore({
       catchName: string,
       species: string,
       length: number,
-      weight: number
+      weight: number,
+      image: string
     ): Promise<any> {
       return await fishService
-        .updateFish(id, catchName, species, length, weight)
+        .updateFish(id, catchName, species, length, weight, image)
         .catch((err) => console.log(err.message));
     },
     async removeFish(id: string): Promise<any> {
@@ -57,7 +59,6 @@ export const FishStore = defineStore({
       fishService
         .getAllFish()
         .then((fishes) => {
-          console.log(fishes);
           this.fishy = [];
 
           fishes.forEach((fish) => {

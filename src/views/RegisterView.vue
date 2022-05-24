@@ -72,7 +72,8 @@ function registerUser() {
       nameInput.value,
       parseInt(ageInput.value),
       emailInput.value,
-      passwordInput.value
+      passwordInput.value,
+      "https://firebasestorage.googleapis.com/v0/b/fishycodexv2.appspot.com/o/profileImages%2FDefault-avatar.png?alt=media&token=65e42ccf-6ad6-499d-a2a0-fa14dc15f900"
     );
     router.push({ path: "/home" });
   }

@@ -18,7 +18,7 @@
     "flowbite": "^1.4.5",
     "pinia": "^2.0.13",
     "socket.io-client": "^4.5.0",
-    "vue": "^3.2.34",
+    "vue": "^3.2.36",
     "vue-router": "^4.0.14",
     "vue3-dropzone": "^0.0.7"
   },

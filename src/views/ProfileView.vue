@@ -6,19 +6,20 @@
         class="container justify-content-center"
         style="width: 25em; margin-bottom: 4em"
       >
-        <input ref="profileImage" type="file" @input="pickImage">
-        <div class="imagePreviewWrapper" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage"></div>
-        <div class="mt-3">Selected file: {{ profileImage ? profileImage.name : '' }}</div>
-        <b-button @click="profileImage = null">Reset via v-model</b-button>
-        <b-button @click="uploadProfileImage" style="margin: 5px">Upload Image</b-button>
-        <b-progress :value="uploadProgress" :max="100" show-progress animated style="margin-bottom: 5px"></b-progress>
-        <b-form-input
-          size="md"
-          v-model="nameInput"
-          style="margin-bottom: 0.5em"
-          placeholder="Name"
-        >
-        </b-form-input>
+        <div>
+          <img
+              width="400"
+              height="400"
+              style="margin: 10px; border-radius: 50%;border-color: #2c3e50; border-width: 3px; border-style: solid;"
+              alt="avatar"
+              :src='profileImageUrl'
+          />
+          <input class="form-control" v-on:change="getFiles"  ref="fileInput" type="file" id="formFile">
+          <b-button @click="clearView">Reset</b-button>
+          <b-button @click="uploadProfileImage" style="margin: 5px">Upload Image</b-button>
+          <b-progress :value="uploadProgress" :max="100" show-progress animated style="margin-bottom: 5px"></b-progress>
+        </div>
+
         <b-input-group
             append="years"
             style="margin-bottom: 0.5em">
@@ -89,10 +90,19 @@ const profileImageUrl = ref<string>("");
 nameInput.value = userStore.userName;
 ageInput.value = userStore.userAge;
 emailInput.value = userStore.userEmail;
-passwordInput.value = userStore.userPassword
+passwordInput.value = userStore.userPassword;
+profileImageUrl.value = userStore.userAvatar;
 
-console.log(nameInput.value, ageInput.value)
+const fileInput = ref("");
 
+function clearView(): any {
+  profileImage.value = (null as unknown) as File;
+  fileInput.value.value = '';
+}
+
+function getFiles(event : any): any {
+  profileImage.value = event.target.files[0];
+}
 
   function isLoggedIn(): boolean {
     sender.value = JSON.parse(<string>localStorage.getItem("user")) as User;
@@ -106,16 +116,19 @@ function updateUser() {
     emailInput.value.length > 0 &&
     passwordInput.value.length > 0
   ) {
+    console.log( " update",
       userStore.updateUser(
           userStore.loggedIn.uuid,
           nameInput.value,
           ageInput.value,
           emailInput.value,
           passwordInput.value,
-      );
+          profileImageUrl.value
+      ));
   }
   router.push({ path: "/fish" });
 }
+
 function deleteUser() {
   userStore.removeUser(userStore.loggedIn.uuid);
   userStore.logout();

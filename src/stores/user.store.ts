@@ -39,6 +39,11 @@ export const UserStore = defineStore({
         return state.loggedInUser.password;
       else return "";
     },
+    userAvatar: (state) => {
+      if (state.loggedInUser.avatar != undefined)
+        return state.loggedInUser.avatar;
+      else return "";
+    },
     loggedIn: (state) => {
       if (state.loggedInUser != undefined) return state.loggedInUser;
       return {} as User;
@@ -61,9 +66,15 @@ export const UserStore = defineStore({
     },
   },
   actions: {
-    createUser(name: string, age: number, email: string, password: string) {
+    createUser(
+      name: string,
+      age: number,
+      email: string,
+      password: string,
+      avatar: string
+    ) {
       userService
-        .createUser(name, age, email, password)
+        .createUser(name, age, email, password, avatar)
         .catch((err) => console.log(err.message));
     },
     updateUser(
@@ -71,10 +82,11 @@ export const UserStore = defineStore({
       name: string,
       age: number,
       email: string,
-      password: string
+      password: string,
+      avatar: string
     ) {
       userService
-        .updateUser(id, name, age, email, password)
+        .updateUser(id, name, age, email, password, avatar)
         .then((user) => {
           if (user) {
             this.loggedInUser = user;

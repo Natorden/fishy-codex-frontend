@@ -7,13 +7,15 @@ export class UserService {
     name: string,
     age: number,
     email: string,
-    password: string
+    password: string,
+    avatar: string
   ): Promise<User> {
     const result = await http.post<User>("/users/", {
       name: name,
       age: age,
       email: email,
       password: password,
+      avatar: avatar,
     });
     return result.data;
   }
@@ -23,13 +25,15 @@ export class UserService {
     name: string,
     age: number,
     email: string,
-    password: string
+    password: string,
+    avatar: string
   ): Promise<User> {
     const result = await http.patch<User>("/users/" + id, {
       name: name,
       age: age,
       email: email,
       password: password,
+      avatar: avatar,
     });
     return result.data;
   }
