@@ -64,7 +64,7 @@
           >
           </b-form-input>
         </b-input-group>
-        <b-input-group append="kg" style="margin-bottom: 0.5em">
+        <b-input-group append="g" style="margin-bottom: 0.5em">
           <b-form-input
             size="md"
             id="number"

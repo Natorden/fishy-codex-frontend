@@ -47,7 +47,7 @@
                       <b-button
                         variant="success"
                         @click="addFriend(user.uuid)"
-                        v-if="user.uuid !== sender.uuid && !isFriend(user.uuid)"
+                        v-if="user.uuid !== sender.uuid"
                         >Add</b-button
                       >
                     </b-col>
@@ -132,9 +132,12 @@
                 <b-dropdown-item
                   v-for="(fish, index) in shownFishList"
                   v-bind:key="index"
-                  v-on:click="onFishClicked(fish)"
+                  v-on:click="sendFish(fish)"
                   >{{ fish.catchName }}
                 </b-dropdown-item>
+                <b-dropdown-text v-show="shownFishList.length === 0"
+                  >Go catch something!</b-dropdown-text
+                >
               </b-dropdown>
             </div>
             <hr />
@@ -149,6 +152,12 @@
                     style="border-radius: 50%"
                   />
                   {{ chat.user.name }}: {{ chat.text }}
+                  <b-img
+                    class="sharedImages"
+                    v-if="chat.fishImage"
+                    :src="chat.fishImage"
+                    alt="fishImg"
+                  />
                 </li>
               </ul>
               <p v-for="typing in chatStore.userTyping">
@@ -296,43 +305,13 @@ function addFriend(friendId: string) {
   console.log(sender.uuid, friendId);
 }
 
-function onFishClicked(fish: Fish) {
-  console.log(fish.catchName);
-}
-
-//TODO: Optimize this
-function isFriend(friendId: string): boolean {
-  userStore.$state.friendUsers.forEach((friend: User) => {
-    if (friend.uuid === friendId) {
-      console.log("is friend");
-      return true;
-    }
-  });
-  console.log(friendId + "is not friend");
-  return false;
-}
-
-//TODO: Optimize this
-function removeFriend(friendId: string) {
-  userStore.$state.friends.forEach((friend: Friend) => {
-    switch (friendId) {
-      case friend.userOneId:
-        if (friend.userTwoId === userStore.loggedIn.uuid) {
-          friendService.remove(friend);
-        }
-        break;
-      case friend.userTwoId:
-        if (friend.userOneId === userStore.loggedIn.uuid) {
-          friendService.remove(friend);
-        }
-        break;
-    }
-  });
-  return false;
-}
-
 function sendMsg() {
   chatStore.createChat(chatInput.value);
+  chatInput.value = "";
+}
+function sendFish(fish: Fish) {
+  console.log("send fish", chatStore.createChat(chatInput.value, fish.image));
+  chatInput.value = "";
 }
 
 function createNewChatRoom() {
@@ -361,7 +340,10 @@ function createNewChatRoom() {
 .width50 {
   width: 50% !important;
 }
-
+.sharedImages {
+  height: 200px !important;
+  margin-bottom: 5px !important;
+}
 .selected {
   font-weight: bold;
 }

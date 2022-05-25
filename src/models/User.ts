@@ -1,5 +1,3 @@
-import type { Fish } from "@/models/Fish";
-
 export interface User {
   uuid: string;
   name: string;
