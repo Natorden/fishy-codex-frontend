@@ -1,4 +1,6 @@
 <template>
+  <div class="container justify-content-center" style="width: 60em; margin-top: 4em">
+    <b-card bg-variant="light">
   <div>
     <h3 style="margin-left: 2em; margin-top: 2em; place-content: center">
       Welcome to your fish page, this displays your fish that you've logged
@@ -74,6 +76,8 @@
     <h4 v-show="shownFishList.length === 0" style="text-align: center">
       It seems your log is empty, Add your first now!
     </h4>
+  </div>
+    </b-card>
   </div>
 </template>
 
