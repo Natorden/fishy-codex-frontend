@@ -1,12 +1,26 @@
 <template>
-  <header>
-    <h3>
-      (temprary text, remove later )Welcome to the Fishy Codex, if you already
-      have an account,
-      <router-link to="/login">login</router-link>. If you're new here,
-      <router-link to="/register">register</router-link> an account
-    </h3>
-  </header>
+  <div class="container justify-content-center" style="width: 60em; margin-top: 4em">
+    <b-card bg-variant="light">
+      <img
+
+        style="position: center; margin-left: 18em"
+        src="https://cdn-icons-png.flaticon.com/512/7374/7374905.png"
+        width="300"
+        height="300"
+        alt="logo"
+      />
+      <h1 style="text-align: center; margin-bottom: 1.5em">Welcome to The Fishy Codex V2</h1>
+      <div
+        class="container justify-content-center"
+        style="width: 40em; margin-bottom: 4em"
+      >
+        <h2 style="text-align: center">
+          The Online Forum for the enthusiastic like yourself, to share your
+          catches, chat with like-minded people, and keep track of your trips!
+        </h2>
+      </div>
+    </b-card>
+  </div>
 </template>
 
 <script setup lang="ts">

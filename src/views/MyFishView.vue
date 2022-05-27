@@ -1,12 +1,20 @@
 <template>
   <div>
-    <h3>
+    <h3 style="margin-left: 2em; margin-top: 2em; place-content: center">
       Welcome to your fish page, this displays your fish that you've logged
     </h3>
     <b-button
+      style="
+        margin-left: 4em;
+        margin-top: 2em;
+        place-content: center;
+        width: auto;
+        background-color: #63cbf1;
+        border-color: #63cbf1;
+      "
       variant="success"
       @click="getUserUuid(userStore.loggedInUser.uuid)"
-      >Add</b-button
+      >Enter New Catch!</b-button
     >
   </div>
   <div class="container" style="margin: 2em auto; width: 50em; padding: 0.5em">
@@ -20,7 +28,10 @@
             <b-col>
               <b-row>
                 <b-col>
-                  <span style="font-size: 1.5em">{{ fish.catchName }}</span> |
+                  <span style="font-size: 1.5em; font-weight: bolder">{{
+                    fish.catchName
+                  }}</span>
+                  |
                   <span style="font-size: 1.5em">{{ fish.species }}</span>
                 </b-col>
               </b-row>
@@ -38,10 +49,21 @@
               </b-row>
             </b-col>
             <b-col>
-              <b-button variant="success" @click="editFish(fish)"
+              <b-button
+                style="
+                  margin-right: 0.5em;
+                  background-color: #63cbf1;
+                  border-color: #63cbf1;
+                  position: center;
+                "
+                variant="success"
+                @click="editFish(fish)"
                 >Edit</b-button
               >
-              <b-button variant="success" @click="removeFish(fish)"
+              <b-button
+                style="background-color: #63cbf1; border-color: #63cbf1"
+                variant="success"
+                @click="removeFish(fish)"
                 >Delete</b-button
               >
             </b-col>
@@ -50,7 +72,7 @@
       </b-list-group-item>
     </b-list-group>
     <h4 v-show="shownFishList.length === 0" style="text-align: center">
-      You haven't recorded any catch yet
+      It seems your log is empty, Add your first now!
     </h4>
   </div>
 </template>

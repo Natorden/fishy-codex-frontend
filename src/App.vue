@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-dark bg-dark navbar-expand-md">
     <img
-      src="@/assets/Images/FishyCodex.png"
+      src="https://cdn-icons-png.flaticon.com/512/7374/7374905.png"
       width="50"
       height="50"
       alt="logo"
@@ -10,7 +10,7 @@
     <span
       class="navbar-brand"
       href="#"
-      style="margin-left: 1em; font-size: 1.5em; color: #a3f8e4"
+      style="margin-left: 1em; font-size: 1.5em; color: #63cbf1"
       >Fishy Codex</span
     >
     <!--    Reactive drop down menu, not working atm-->
@@ -35,12 +35,14 @@
       <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav">
           <!--        buttons shown when user logged in-->
+
           <img
-              :src="userStore.userAvatar"
-              width="50"
-              height="50"
-              alt="Profile picture"
-              style="margin-right: 1em; border-radius: 50%;"
+            v-show="isLoggedIn.call()"
+            :src="userStore.userAvatar"
+            width="50"
+            height="50"
+            alt="Profile picture"
+            style="margin-right: 1em; border-radius: 50%;"
           />
           <span v-show="isLoggedIn.call()" id="username">{{ userStore.userName }}</span>
           <li class="nav-item active" v-show="isLoggedIn.call()">
@@ -51,7 +53,7 @@
           </li>
           <li class="nav-item active" v-show="isLoggedIn.call()">
             <RouterLink to="/friends" class="navbarItem">Friend Requests
-              <b-badge variant="success" style="font-size: 0.7em">{{ userStore.getRequestAmount }}</b-badge>
+              <b-badge variant="success" style="font-size: 0.7em; border-color: #156bea; background-color: #156bea">{{ userStore.getRequestAmount }}</b-badge>
             </RouterLink>
           </li>
           <li class="nav-item active" v-show="isLoggedIn.call()">
@@ -142,7 +144,7 @@ onUpdated(() => {
 #username {
   margin-right: 1.5em;
   text-decoration: none;
-  color: #a3f8e4;
+  color: #4bb4da;
   font-size: 1.2em;
 }
 </style>

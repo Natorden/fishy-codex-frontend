@@ -45,10 +45,17 @@
                     >
                     <b-col cols="2">
                       <b-button
+                        style="
+                          place-content: center;
+                          width: 7em;
+                          margin-top: 1em;
+                          background-color: #63cbf1;
+                          border-color: #63cbf1;
+                        "
                         variant="success"
                         @click="addFriend(user.uuid)"
                         v-if="user.uuid !== sender.uuid"
-                        >Add</b-button
+                        >Add Friend</b-button
                       >
                     </b-col>
                   </b-row>
@@ -76,6 +83,12 @@
                 minlength="3"
               />
               <button
+                style="
+                  margin-left: 2em;
+                  width: auto;
+                  background-color: #156bea;
+                  border-color: #156bea;
+                "
                 type="button"
                 class="btn btn-primary"
                 v-on:click="createNewChatRoom"
@@ -92,7 +105,7 @@
                 v-for="chatRoom in chatStore.chatRooms"
                 v-on:click="onRoomClicked(chatRoom)"
                 v-bind:key="chatRoom.uuid"
-                style="margin-bottom: 5px; border-bottom: 1px solid #ccc"
+                style="margin-bottom: 5px; margin-top: 1.5em; border-bottom: 1px solid #ccc; font-weight: bold"
               >
                 {{ chatRoom.name }}
               </li>
@@ -117,6 +130,13 @@
                 minlength="1"
               />
               <button
+                style="
+                  margin-left: 1em;
+                  margin-right: 1em;
+                  width: auto;
+                  background-color: #63cbf1;
+                  border-color: #63cbf1;
+                "
                 type="button"
                 class="btn btn-primary"
                 v-on:click="sendMsg"
@@ -124,6 +144,11 @@
                 Send
               </button>
               <b-dropdown
+                style="
+                  margin-left: 1em;
+                  margin-right: 1em;
+                  width: auto;
+                "
                 text="Send fish"
                 block
                 variant="primary"

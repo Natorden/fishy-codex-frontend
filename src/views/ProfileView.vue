@@ -1,16 +1,16 @@
 <template>
   <div class="container justify-content-center">
     <b-card bg-variant="light">
-      <h2 style="text-align: center; margin-bottom: 1.5em">Your Profile</h2>
+      <h2 style="text-align: center; margin-bottom: 1.5em">{{ userStore.userName }}</h2>
       <div
         class="container justify-content-center"
-        style="width: 25em; margin-bottom: 4em"
+        style="width: 25em; margin-bottom: 1em"
       >
         <div>
           <img
               width="400"
               height="400"
-              style="margin: 10px; border-radius: 50%;border-color: #2c3e50; border-width: 3px; border-style: solid;"
+              style="margin: 10px; border-radius: 50%;border-color: #2c3e50; border-width: 3px; border-style: solid; margin-bottom: 4em"
               alt="avatar"
               :src='profileImageUrl'
           />
@@ -50,10 +50,15 @@
         </b-form-input>
       </div>
       <b-button
+
         class="container justify-content-center"
         block
         variant="success"
-        style="margin-bottom: 5px"
+        style="
+        margin-bottom: 1em;
+        background-color: #63cbf1;
+        border-color: #63cbf1;
+      "
         @click="updateUser"
         >Save changes
       </b-button>
@@ -61,6 +66,11 @@
         class="container justify-content-center"
         block
         variant="danger"
+        style="
+        margin-bottom: 1em;
+        background-color: #2c86a8;
+        border-color: #2C86A8FF;
+      "
         @click="confirmDelete"
         >Delete account
       </b-button>

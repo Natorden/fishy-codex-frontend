@@ -1,10 +1,10 @@
 <template>
-  <div class="container justify-content-center" style="width: 35em">
+  <div class="container justify-content-center" style="width: 35em; margin-top: 4em">
     <b-card bg-variant="light">
       <h2 style="text-align: center; margin-bottom: 1.5em">Register User</h2>
       <div
         class="container justify-content-center"
-        style="width: 25em; margin-bottom: 4em"
+        style="width: 25em; margin-bottom: 4em; margin-top: 2em;"
       >
         <b-form-input
           size="md"
@@ -43,6 +43,10 @@
         class="container justify-content-center"
         block
         variant="success"
+        style="
+        background-color: #63cbf1;
+        border-color: #63cbf1;
+        "
         @click="registerUser"
         >Register User
       </b-button>

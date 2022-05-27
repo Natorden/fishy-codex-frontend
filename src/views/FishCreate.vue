@@ -1,7 +1,7 @@
 <template>
   <div class="container justify-content-center" style="width: 35em">
     <b-card bg-variant="light">
-      <h2 style="text-align: center; margin-bottom: 1.5em">Add a fish</h2>
+      <h2 style="text-align: center; margin-bottom: 1.5em">Add New Entry</h2>
       <div
         class="container justify-content-center"
         style="width: 25em; margin-bottom: 4em"
@@ -42,14 +42,14 @@
         <b-form-input
           size="md"
           v-model="catchNameInput"
-          placeholder="Enter a catch name"
+          placeholder="Title"
           style="margin-bottom: 0.5em"
         >
         </b-form-input>
         <b-form-input
           size="md"
           v-model="speciesInput"
-          placeholder="Enter the fish species"
+          placeholder="Species"
           style="margin-bottom: 0.5em"
         >
         </b-form-input>
@@ -60,23 +60,27 @@
             type="number"
             min="10"
             v-model="lengthInput"
-            placeholder="Enter the fish length"
+            placeholder="Length"
           >
           </b-form-input>
         </b-input-group>
-        <b-input-group append="kg" style="margin-bottom: 0.5em">
+        <b-input-group append="g" style="margin-bottom: 0.5em">
           <b-form-input
             size="md"
             id="number"
             type="number"
             min="10"
             v-model="weightInput"
-            placeholder="Enter the fish weight"
+            placeholder="Weight"
           >
           </b-form-input>
         </b-input-group>
       </div>
       <b-button
+        style="
+        background-color: #63cbf1;
+        border-color: #63cbf1;
+      "
         class="container justify-content-center"
         block
         variant="success"
@@ -133,7 +137,7 @@ function registerFish() {
     fishImageUrl.value,
     userStore.loggedIn.uuid
   );
-  router.push({ path: "/home" });
+  router.push({ path: "/fish?" });
 }
 
 // upload fish image to firebase storage
