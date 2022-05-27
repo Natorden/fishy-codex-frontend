@@ -1,82 +1,93 @@
 <template>
-  <div class="container justify-content-center" style="width: 60em; margin-top: 4em">
+  <div
+    class="container justify-content-center"
+    style="width: 80em; margin-top: 4em"
+  >
     <b-card bg-variant="light">
-  <div>
-    <h3 style="margin-left: 2em; margin-top: 2em; place-content: center">
-      Welcome to your fish page, this displays your fish that you've logged
-    </h3>
-    <b-button
-      style="
-        margin-left: 4em;
-        margin-top: 2em;
-        place-content: center;
-        width: auto;
-        background-color: #63cbf1;
-        border-color: #63cbf1;
-      "
-      variant="success"
-      @click="getUserUuid(userStore.loggedInUser.uuid)"
-      >Enter New Catch!</b-button
-    >
-  </div>
-  <div class="container" style="margin: 2em auto; width: 50em; padding: 0.5em">
-    <b-list-group v-for="(fish, index) in shownFishList" v-bind:key="index">
-      <b-list-group-item class="justify-content-center">
-        <b-container>
-          <b-row>
-            <b-col cols="2">
-              <img :src="fish.image" width="50" height="50" alt="Fish Image" />
-            </b-col>
-            <b-col>
+      <div>
+        <h3 style="margin-left: 2em; margin-top: 2em; text-align: center">
+          Welcome to your fish page, this displays your fish that you've logged
+        </h3>
+        <b-button
+          style="
+            background-color: #63cbf1;
+            border-color: #63cbf1;
+          "
+          variant="success"
+          class="container justify-content-center"
+          block
+          @click="getUserUuid(userStore.loggedInUser.uuid)"
+          >Enter New Catch!</b-button
+        >
+      </div>
+      <div
+        class="container"
+        style="margin: 2em auto; width: 50em; padding: 0.5em"
+      >
+        <b-list-group v-for="(fish, index) in shownFishList" v-bind:key="index">
+          <b-list-group-item class="justify-content-center">
+            <b-container>
               <b-row>
-                <b-col>
-                  <span style="font-size: 1.5em; font-weight: bolder">{{
-                    fish.catchName
-                  }}</span>
-                  |
-                  <span style="font-size: 1.5em">{{ fish.species }}</span>
+                <b-col cols="2">
+                  <img
+                    :src="fish.image"
+                    width="50"
+                    height="50"
+                    alt="Fish Image"
+                  />
                 </b-col>
-              </b-row>
-              <b-row>
                 <b-col>
                   <b-row>
-                    <span style="font-size: 1.5em">{{ fish.length }} cm</span>
+                    <b-col>
+                      <span style="font-size: 1.5em; font-weight: bolder">{{
+                        fish.catchName
+                      }}</span>
+                      |
+                      <span style="font-size: 1.5em">{{ fish.species }}</span>
+                    </b-col>
                   </b-row>
                   <b-row>
-                    <span style="font-size: 1.5em"
-                      >{{ fish.weight }} grams</span
-                    >
+                    <b-col>
+                      <b-row>
+                        <span style="font-size: 1.5em"
+                          >{{ fish.length }} cm</span
+                        >
+                      </b-row>
+                      <b-row>
+                        <span style="font-size: 1.5em"
+                          >{{ fish.weight }} grams</span
+                        >
+                      </b-row>
+                    </b-col>
                   </b-row>
                 </b-col>
+                <b-col>
+                  <b-button
+                    style="
+                      margin-right: 0.5em;
+                      background-color: #63cbf1;
+                      border-color: #63cbf1;
+                      position: center;
+                    "
+                    variant="success"
+                    @click="editFish(fish)"
+                    >Edit</b-button
+                  >
+                  <b-button
+                    style="background-color: #63cbf1; border-color: #63cbf1"
+                    variant="success"
+                    @click="removeFish(fish)"
+                    >Delete</b-button
+                  >
+                </b-col>
               </b-row>
-            </b-col>
-            <b-col>
-              <b-button
-                style="
-                  margin-right: 0.5em;
-                  background-color: #63cbf1;
-                  border-color: #63cbf1;
-                  position: center;
-                "
-                variant="success"
-                @click="editFish(fish)"
-                >Edit</b-button
-              >
-              <b-button
-                style="background-color: #63cbf1; border-color: #63cbf1"
-                variant="success"
-                @click="removeFish(fish)"
-                >Delete</b-button
-              >
-            </b-col>
-          </b-row>
-        </b-container>
-      </b-list-group-item>
-    </b-list-group>
-    <h4 v-show="shownFishList.length === 0" style="text-align: center">
-      It seems your log is empty, Add your first now!
-    </h4>
-  </div>
+            </b-container>
+          </b-list-group-item>
+        </b-list-group>
+        <h4 v-show="shownFishList.length === 0" style="text-align: center">
+          It seems your log is empty, Add your first now!
+        </h4>
+      </div>
     </b-card>
   </div>
 </template>
